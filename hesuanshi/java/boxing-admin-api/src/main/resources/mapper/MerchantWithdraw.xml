@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantWithdrawDao">
+
+	<!-- 查询商户提现记录 -->
+	<select id="findWithdrawByMerchantId" resultType="MerchantWithdrawVO">
+		SELECT id,
+			   merchant_id as merchantId,
+			   money,
+			   status,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+		FROM merchant_withdraw
+		<where>
+			merchant_id = #{merchantId}
+		</where>
+		ORDER BY create_time DESC
+	</select>
+	
+	<!-- 查询所有商户提现记录 -->
+	<select id="queryWithdrawByPage" resultType="MerchantWithdrawVO">
+		SELECT a.id,
+			   a.merchant_id as merchantId,
+			   a.money,
+			   a.status,
+			   date_format(a.create_time,'%Y-%m-%d %H:%i') as createTime,
+			   b.contact,
+			   b.phone
+		FROM merchant_withdraw a LEFT JOIN merchant b ON a.merchant_id = b.id
+		<where>
+			<if test="name != null and name != ''">
+				b.contact LIKE CONCAT('%',#{name},'%')
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<!-- 修改提现记录状态-->
+    <update id="updateStatus">
+		UPDATE merchant_withdraw
+		<set>
+			 status = #{status},
+			 update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

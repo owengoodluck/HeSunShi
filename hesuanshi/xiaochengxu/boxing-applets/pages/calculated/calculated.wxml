@@ -1,0 +1,84 @@
+<view>
+  <view class='price' wx:if='{{isShow == 1}}'>
+    <view class='total_price'>{{calculated.price}}元</view>
+    <view class='piece_price'>单价：{{unitPrice}}元/个</view>
+  </view>
+  <view class='price' wx:if='{{isShow == 0}}'>
+    <view class='main_prompt'>温馨提示</view>
+    <view class='subtitle_prompt'>由于你选择自定义包装，请保存方案，等待系统报价。</view>
+  </view>
+  <view class='user_service'>
+    <view class='home_title'>请选择</view>
+    <view class='name_block'>
+      <text>名称</text>
+      <input placeholder='请输入方案名称' style='margin-left:28rpx;' placeholder-class='placeholder' bindinput="bindNameInput" value='{{calculated.name}}'></input>
+    </view>
+    <view class='service_detail' bindtap='boxTypeTap'>
+      <view class='service_detail_left'>
+        <image src='{{calculated.typeImage}}' class='service_left_icon'></image>
+        <text class='service_text'>{{calculated.typeName}}</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/home_left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <view class='service_detail' bindtap='boxMaterailTap'>
+      <view class='service_detail_left'>
+        <image src='{{calculated.materialImage}}' class='service_left_icon'></image>
+        <text class='service_text'>{{calculated.materialName}}</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/home_left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <view class='service_detail' style='border-bottom: 1px solid #fff;' bindtap='boxLayoutTap'>
+      <view class='service_detail_left'>
+        <image src='{{calculated.layoutImage}}' class='service_left_icon'></image>
+        <text class='service_text'>{{calculated.layoutName}}</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/home_left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+  </view>
+  <view class='size'>
+    <view>请输入尺寸要求</view>
+    <view class='size_content'>
+      <view class='size_block'>
+        <text>尺寸</text>
+        <text style='margin-left:28rpx;'>长</text>
+        <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindLengthInput" value='{{calculated.length}}'></input>
+        <text>宽</text>
+        <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindWidthInput" value='{{calculated.width}}'></input>
+        <text>高</text>
+        <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindHeightInput" value='{{calculated.height}}'></input>
+      </view>
+      <view class='size_block'>
+        <text>数量</text>
+        <input type='number' placeholder='请输入需求数量' style='margin-left:28rpx;' placeholder-class='placeholder' bindinput="bindPieceInput" value='{{calculated.piece}}'></input>
+      </view>
+      <view class='size_block_bottom'>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{printMethodArray}}">
+          <view class='size_block_bottom_left'>
+            <text>印刷</text>
+            <text class='size_block_bottom_text'>{{calculated.printMethodName}}</text>
+          </view>
+          <view class='size_block_bottom_right'>
+            <image src='/images/home_left.png' class='service_right_icon'></image>
+          </view>
+          <view style='clear:both;'></view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class='one_result' wx:if='{{isShow == 0}}' bindtap='saveCustom' data-type='2'>
+    <button class='button'>保存方案</button>
+  </view>
+  <view class='two_result' wx:if='{{isShow == 1}}'>
+    <button class='save_button' style='width:{{windowWidth/2}}px;' bindtap='saveCustom' data-type='1'>保存方案</button>
+    <button class='order_button' style='width:{{windowWidth/2}}px;' bindtap='ordersubmit'>预付{{calculated.advancePaymentPrice}}元</button>
+  </view>
+</view>

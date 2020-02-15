@@ -1,0 +1,53 @@
+page {
+  background: #f9f9f9;
+  padding-bottom: 50rpx;
+}
+
+.titleView {
+  border-top: 2rpx solid rgba(0, 0, 0, 0.14);
+  background: #fff;
+  height: 308rpx;
+  padding-left: 20rpx;
+}
+
+.title-text {
+  margin-top: 28rpx;
+  height: 20px;
+  font-size: 14px;
+  color: #333;
+  line-height: 20px;
+}
+
+.title-money {
+  height: 81px;
+  font-size: 58px;
+  color: rgba(51, 51, 51, 1);
+  line-height: 81px;
+}
+
+.remark {
+  height: 90rpx;
+  font-size: 14px;
+  color: rgba(136, 136, 136, 1);
+  line-height: 90rpx;
+  background: #fff;
+  padding-left: 20rpx;
+}
+
+.result {
+  margin: 108rpx 20rpx 0 20rpx;
+  padding-bottom: 100rpx;
+}
+
+.button {
+  height: 98rpx;
+  line-height: 98rpx;
+  background: rgba(231, 0, 16, 1);
+  border-radius: 30px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.button::after {
+  border: 0;
+}

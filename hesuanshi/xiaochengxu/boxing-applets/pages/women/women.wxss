@@ -1,0 +1,31 @@
+.border {
+  margin: 20rpx;
+  width: 710rpx;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  text-align: center;
+  padding-bottom: 54rpx;
+}
+
+.logo {
+  margin-top: 54rpx;
+  width: 148rpx;
+  height: 148rpx;
+  border-radius: 74rpx;
+}
+
+.gs-name {
+  margin-top: 24rpx;
+  height: 24px;
+  font-size: 17px;
+  color: rgba(0, 0, 0, 1);
+  line-height: 24px;
+}
+
+.content {
+  margin: 32rpx 32rpx 0 32rpx;
+  font-size: 15px;
+  color: rgba(102, 102, 102, 1);
+  line-height: 28px;
+}

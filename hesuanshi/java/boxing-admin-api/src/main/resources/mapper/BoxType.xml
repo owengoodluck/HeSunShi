@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.BoxTypeDao">
+	
+	<!-- 添加盒型-->
+	<insert id="insert" parameterType="BoxType">
+        INSERT INTO box_type_detail (
+        			box_type_classify_id,
+        			name,
+        			image,
+        			valuation_formula,
+        			min_piece,
+        			max_piece,
+        			reserve_num,
+        			remark,
+        			create_time,
+        			update_time
+        	) VALUES(
+        			#{classifyId},
+        			#{name},
+        			#{image},
+        			#{valuationFormula},
+        			#{minPiece},
+        			#{maxPiece},
+        			#{reserveNum},
+        			#{remark},
+        			now(),
+        			now()
+        		)
+    </insert>
+    
+    <!-- 分页查询盒型-->
+	<select id="queryByPage" resultType="BoxType">
+		SELECT a.id,
+			   a.name,
+			   a.image,
+			   a.min_piece as minPiece,
+			   a.max_piece as maxPiece,
+			   a.reserve_num as reserveNum,
+			   a.valuation_formula as valuationFormula,
+			   a.remark,
+			   a.status,
+			   b.id as classifyId,
+			   b.name as classifyName
+		FROM box_type_detail a LEFT JOIN box_type_classify b ON a.box_type_classify_id = b.id
+		<where>
+			<if test="name != null and name != ''">
+				a.name LIKE CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新盒型 -->
+ 	<update id="update" parameterType="BoxType">
+		UPDATE box_type_detail
+		<set>
+			<if test="classifyId != null and classifyId !=''">
+				box_type_classify_id = #{classifyId},
+			</if>
+			<if test="image != null and image !=''">
+				image = #{image},
+			</if>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+			<if test="valuationFormula != null and valuationFormula !=''">
+				valuation_formula = #{valuationFormula},
+			</if>
+			<if test="status != null and status !=''">
+				status = #{status},
+			</if>
+			reserve_num = #{reserveNum},
+			max_piece = #{maxPiece},
+			min_piece = #{minPiece},
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!--删除盒型 -->
+	<delete id="delete" parameterType="int">
+        DELETE FROM box_type_detail
+        <where>
+			id = #{id}
+		</where>
+    </delete>
+    
+    <!-- 查询盒型用于下拉框回显 -->
+	<select id="findBoxType" resultType="BoxType">
+		SELECT id,name FROM box_type_detail
+	</select>
+</mapper>

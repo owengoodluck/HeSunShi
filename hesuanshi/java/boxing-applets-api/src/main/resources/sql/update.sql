@@ -1,0 +1,1 @@
+ALTER TABLE custom_specification ADD COLUMN advance_payment_price  decimal(18,2) DEFAULT '0.00' COMMENT '预付款金额' ;

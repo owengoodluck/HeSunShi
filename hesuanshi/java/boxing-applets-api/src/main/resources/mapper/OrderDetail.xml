@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.OrderDetailDao">
+
+	<!-- 添加订单详情-->
+	<insert id="insert" parameterType="CustomOrderDetail" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO order_detail (
+			order_id,
+			user_id,
+			type,
+			name,
+			form_id,
+			custom_number,
+			type_id,
+			type_name,
+			type_image,
+			material_id,
+			material_name,
+			material_image,
+			layout_id,
+			layout_name,
+			layout_image,
+			print_method_id,
+			print_method_name,
+			length,
+			width,
+			height,
+			piece,
+			price,
+			advance_payment_price,
+			fare,
+			create_time,
+			update_time
+		)
+		values(
+			#{orderId},
+			#{userId},
+			#{type},
+			#{name},
+			#{formId},
+			#{customNumber},
+			#{typeId},
+			#{typeName},
+			#{typeImage},
+			#{materialId},
+			#{materialName},
+			#{materialImage},
+			#{layoutId},
+			#{layoutName},
+			#{layoutImage},
+			#{printMethodId},
+			#{printMethodName},
+			#{length},
+			#{width},
+			#{height},
+			#{piece},
+			#{price},
+			#{advancePaymentPrice},
+			#{fare},
+			now(),
+			now()
+        )
+    </insert>
+    
+    <!-- 修改订单详情状态 -->
+    <update id="updateStatusById">
+    	UPDATE order_detail
+		<set>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{orderDetailId}
+		</where>
+    </update>
+    
+    <!-- 根据商品详情id查询该订单是否多条商品有存在退款 -->
+    <select id="findNotRefundSum" resultType="int">
+    	SELECT count(id) FROM order_detail WHERE order_id = (SELECT order_id FROM order_detail WHERE id = #{orderDetailId}) AND status in(0,1);
+    </select>
+
+	<!-- 根据订单详情id查询订单id -->
+    <select id="findOrderIdById" resultType="long">
+    	SELECT order_id FROM order_detail WHERE id = #{orderDetailId}
+    </select>
+
+	<!-- 根据订单详情id查询订单id -->
+	<select id="findByOrderId" resultType="CustomOrderDetail">
+		SELECT
+			id,
+			order_id as orderId,
+			user_id as userId,
+			type as type,
+			name as name,
+			form_id as formId,
+			custom_number as customNumber,
+			type_id as typeId,
+			type_name as typeName,
+			type_image as typeImage,
+			material_id as materialId,
+			material_name as materialName,
+			material_image as materialImage,
+			layout_id as layoutId,
+			layout_name as layoutName,
+			layout_image as layoutImage,
+			print_method_id as printMethodId,
+			print_method_name as printMethodName,
+			length as length,
+			width as width,
+			height as height,
+			piece as piece,
+			price as price,
+			advance_payment_price as advancePaymentPrice,
+			fare as fare
+		from order_detail
+		WHERE order_id = #{orderId}
+	</select>
+
+
+	<!-- 查询已预付的订单详情 -->
+	<select id="getCompleteAdvancePaymentList" resultType="CustomOrderDetail">
+		SELECT
+			d.id,
+			d.order_id as orderId,
+			d.user_id as userId,
+			type as type,
+			name as name,
+			form_id as formId,
+			custom_number as customNumber,
+			type_id as typeId,
+			type_name as typeName,
+			type_image as typeImage,
+			material_id as materialId,
+			material_name as materialName,
+			material_image as materialImage,
+			layout_id as layoutId,
+			layout_name as layoutName,
+			layout_image as layoutImage,
+			print_method_id as printMethodId,
+			print_method_name as printMethodName,
+			length as length,
+			width as width,
+			height as height,
+			piece as piece,
+			price as price,
+			advance_payment_price as advancePaymentPrice,
+			fare as fare
+		from order_detail d
+		join order_user o
+		on o.id = d.order_id
+		<where>
+			pay_status = 1
+		</where>
+		ORDER BY d.id DESC
+	</select>
+
+	<!-- 查询已下单的订单详情 -->
+	<select id="getCompleteAllPaymentList" resultType="CustomOrderDetail">
+		SELECT
+			d.id,
+			d.order_id as orderId,
+			d.user_id as userId,
+			type as type,
+			name as name,
+			form_id as formId,
+			custom_number as customNumber,
+			type_id as typeId,
+			type_name as typeName,
+			type_image as typeImage,
+			material_id as materialId,
+			material_name as materialName,
+			material_image as materialImage,
+			layout_id as layoutId,
+			layout_name as layoutName,
+			layout_image as layoutImage,
+			print_method_id as printMethodId,
+			print_method_name as printMethodName,
+			length as length,
+			width as width,
+			height as height,
+			piece as piece,
+			price as price,
+			advance_payment_price as advancePaymentPrice,
+			fare as fare
+		from order_detail d
+		join order_user o
+		on o.id = d.order_id
+		<where>
+			pay_status = 2
+			or
+			pay_status = 3
+		</where>
+		ORDER BY id DESC
+	</select>
+</mapper>

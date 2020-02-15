@@ -1,0 +1,10 @@
+<view>
+  <view class='detail_image'>
+    <image src='{{detail.image}}' style='width:{{windowWidth-100}}px;height:{{windowWidth-100}}px;border-radius:12rpx;'></image>
+  </view>
+  <view class='name'>{{detail.name}}</view>
+  <view class='remark'>{{detail.remark}}</view>
+  <view class='certain' bindtap='certainTap'>
+    <button class='button'>确定</button>
+  </view>
+</view>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantDao">
+	<!-- 添加商户信息-->
+	<insert id="insert" parameterType="Merchant" useGeneratedKeys="true" keyProperty="id"> 
+        insert into merchant (
+        	phone,
+        	contact,
+        	logo,
+        	name,
+        	items,
+        	license,
+        	province,
+        	city,
+        	county,
+        	address,
+      		create_time,
+      		update_time
+        )
+        values(
+        	#{phone},
+        	#{contact},
+        	#{logo},
+        	#{name},
+        	#{items},
+        	#{license},
+        	#{province},
+        	#{city},
+        	#{county},
+        	#{address},
+	        now(),
+	        now()
+        )
+    </insert>
+    <!-- 查找商户信息 -->
+	<select id="selectById" resultType="Merchant">
+		select * from merchant 
+		<where>
+	    	id = #{id}
+		</where>
+	</select>
+    <!-- 根据手机号查看商户信息  -->
+	<select id="selectByPhone" resultType="Merchant">
+		select a.*, b.unionid, b.service_number_openid as serviceNumberOpenid from merchant a
+			left join merchant_staff b on b.merchant_id = a.id
+		<where>
+	    	b.phone = #{phone}
+		</where>
+	</select>
+	<!-- 根据unionid查看商户信息 -->
+	<select id="selectByUnionid" resultType="Merchant">
+		select a.*, b.unionid, b.service_number_openid as serviceNumberOpenid from merchant a
+			left join merchant_staff b on b.merchant_id = a.id
+		<where>
+	    	b.unionid = #{unionid}
+		</where>
+	</select>
+	<!-- 更新商户信息-->
+    <update id="update" parameterType="Merchant">
+		update merchant
+		<set>
+			<if test="phone != null and phone !=''">
+				phone = #{phone},
+			</if>
+			<if test="contact != null and contact !=''">
+				contact = #{contact},
+			</if>
+			<if test="logo != null and logo !=''">
+				logo = #{logo},
+			</if>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="items != null and items !=''">
+				items = #{items},
+			</if>
+			<if test="license != null and license !=''">
+				license = #{license},
+			</if>
+			<if test="province != null and province !=''">
+				province = #{province},
+			</if>
+			<if test="city != null and city !=''">
+				city = #{city},
+			</if>
+			<if test="county != null and county !=''">
+				county = #{county},
+			</if>
+			update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 查询商户工作台数据-->
+ 	<select id="selectHomeData" resultType="HomeDataVO">
+		SELECT a.logo,
+			   a.name,
+			   a.items,
+			   a.contact,
+			   a.phone,
+			   b.todayOrderNum,
+			   c.myStaffNum,
+			   d.pendingOrderNum,
+			   e.pendingShipmentOrderNum
+		FROM 
+			(SELECT *FROM merchant WHERE id = #{userId}) a,
+			(SELECT COUNT(id) as todayOrderNum FROM merchant_order WHERE merchant_id = #{userId} AND TO_DAYS(NOW())-TO_DAYS(create_time) = 0) b,
+			(SELECT COUNT(id) as myStaffNum FROM merchant_staff WHERE merchant_id = #{userId} AND type = 2) c,
+			(SELECT COUNT(id) as pendingOrderNum FROM merchant_order WHERE merchant_id = #{userId} AND status = 0) d,
+			(SELECT COUNT(m.id) as pendingShipmentOrderNum FROM merchant_order m 
+												   		   LEFT JOIN order_user o ON m.order_id = o.id 
+												           WHERE m.merchant_id = #{userId} AND m.status = 1 AND o.status = 1) e
+	</select>
+</mapper>

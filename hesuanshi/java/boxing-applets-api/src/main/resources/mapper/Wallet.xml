@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.WalletDao">
+	<!-- 添加用户钱包-->
+	<insert id="insert" parameterType="Wallet" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO wallet (
+        			user_id,
+      				create_time,
+      				update_time
+        		)
+        	values(
+        			#{userId},
+	        		now(),
+	        		now()
+        		)
+    </insert>
+   
+   	<!-- 根据用户id查询用户钱包余额 -->
+	<select id="findWallet" resultType="Wallet">
+		SELECT *FROM wallet
+		<where>
+	    	user_id = #{userId}
+		</where>
+	</select>
+	
+	<!-- 添加用户钱包记录-->
+	<insert id="insertRecord" parameterType="WalletRecord" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO wallet_record (
+        			business_number,
+					type,
+  					money,
+  					user_id,
+					create_time,
+					update_time
+        		)
+        	values(
+        			#{businessNumber},
+        			#{type},
+        			#{money},
+        			#{userId},
+	        		now(),
+	        		now()
+        		)
+    </insert>
+    
+   	<!-- 根据交易编号查询钱包记录-->
+	<select id="findWalletRecordByOutTradeNo" resultType="WalletRecord">
+		SELECT id,
+			   business_number as businessNumber,
+			   type,
+			   money,
+			   status,
+			   user_id as userId
+		FROM wallet_record
+		<where>
+	    	business_number = #{outTradeNo}
+		</where>
+	</select>
+	
+	<!-- 根据交易编号修改钱包记录状态-->
+    <update id="updateRecordStatus" parameterType="string">
+		UPDATE wallet_record
+		<set>
+			status = #{status},
+			update_time= now()
+		</set>
+		<where>
+			business_number = #{outTradeNo}
+		</where>
+	</update>
+	
+	<!-- 根据用户id修改余额-->
+    <update id="updateMoney">
+		UPDATE wallet
+		<set>
+			money = money + #{money},
+			update_time= now()
+		</set>
+		<where>
+			user_id = #{userId}
+		</where>
+	</update>
+	
+   	<!-- 我的钱包记录 -->
+	<select id="findRecord" resultType="WalletRecord">
+		SELECT id,
+			   business_number as businessNumber,
+			   type,
+			   money,
+			   status,
+			   user_id as userId,
+			   date_format(create_time,'%Y-%m-%d') as createTime
+		FROM wallet_record
+		<where>
+	    	user_id = #{userId}
+		</where>
+	</select>
+</mapper>

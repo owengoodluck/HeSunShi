@@ -1,0 +1,61 @@
+<view style='margin-right:20rpx;margin-left:20rpx;'>
+  <view class='item' style='border-top: 1px solid rgba(151, 151, 151, 0.1);'>
+    <view class='title' style='float: left;'>头像</view>
+    <image class='img' style='float: right;margin-top: 18rpx;margin-bottom: 18rpx;' src='{{userDetail.avatar}}'></image>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='item'>
+    <view class='title' style='float: left;'>昵称</view>
+    <input class='title' type='text' style='float: right;text-align:right' value='{{nickName}}' bindchange="nameChange"></input>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='item'>
+    <view class='title' style='float: left'>性别</view>
+    <view class='title' type='text' style='float: right;'>
+      <radio-group bindchange="radioChange">
+        <label style='padding-right: 52rpx;'>
+          <radio value="1" style='transform:scale(0.65);' checked="{{gender == 1}}" color='#ff898d' />男
+        </label>
+        <label>
+          <radio value="2" style='transform:scale(0.65);' checked="{{gender == 2}}" color='#ff898d' />女
+        </label>
+      </radio-group>
+    </view>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='title' style="float:right;">
+    <image src='/images/left.png' style='width:6px;height:12px;'></image>
+  </view>
+  <view class='item'>
+    <view class='title' style='float: left'>地区</view>
+    <view class="section" style='float: right;margin-right: 34rpx;'>
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+        <view class="title">
+          {{region[0]}}，{{region[1]}}
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='title' style="float:right;">
+    <image src='/images/left.png' style='width:12rpx;height:24rpx;'></image>
+  </view>
+  <view class='item' bindtap='phoneTap'>
+    <view class='title' style='float: left;'>手机号码</view>
+    <view class='title' style='float: right;text-align:right;margin-right: 34rpx;'>{{phone}}</view>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='title' style="float:right;">
+    <image src='/images/left.png' style='width:12rpx;height:24rpx;'></image>
+  </view>
+  <view class='item' bindtap='certificationTap'>
+    <view class='title' style='float: left;'>企业认证</view>
+    <view wx:if='{{status == -1}}' class='title' style='float: right;text-align:right;margin-right: 34rpx;'>未认证</view>
+    <view wx:elif='{{status == 0}}' class='title' style='float: right;text-align:right;margin-right: 34rpx;'>认证中</view>
+    <view wx:elif='{{status == 1}}' class='title' style='float: right;text-align:right;margin-right: 34rpx;'>已通过</view>
+    <view wx:elif='{{status == 2}}' class='title' style='float: right;text-align:right;margin-right: 34rpx;'>审核失败</view>
+  </view>
+  <view style='margin-top: 164rpx;'>
+    <button class='subButton' bindtap="submit">保存</button>
+  </view>
+</view>

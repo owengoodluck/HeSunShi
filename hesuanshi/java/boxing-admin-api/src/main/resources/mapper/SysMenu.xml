@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.SysMenuDao">
+	
+	<!-- 根据菜单id查询权限字符串 -->
+	<select id="findPowerByMenuIds" resultType="string" parameterType="java.util.List">
+		SELECT power FROM sys_menu WHERE id IN 
+    		<foreach item="item" index="index" collection="temp" open="(" separator="," close=")">
+    			#{item}
+    		</foreach>
+	</select>
+	
+	
+	
+	<!--查询菜单给下拉框 -->
+	<select id="findMenu" resultType="SysMenu">
+		SELECT id, name FROM sys_menu
+		<where>
+			pid = '0' OR pid = '1' OR pid IN(SELECT id FROM sys_menu WHERE pid = '1')
+		</where>
+	</select>
+	
+	<!-- 添加菜单-->
+	<insert id="insertMenu" parameterType="SysMenu">
+        INSERT INTO sys_menu (pid,name,power,tips,status) 
+        VALUES(#{pid},#{name},#{power},#{tips},#{status})
+    </insert>
+    
+    <!-- 分页查讯菜单 -->
+	<select id="queryMenuByPage" resultType="SysMenu">
+		SELECT m1.id, 
+			   m2.name as pName,
+			   m1.name as name,
+			   m1.power as power,
+			   m2.id as pid
+		 FROM sys_menu m1 LEFT JOIN sys_menu m2 ON m1.pid = m2.id
+		<where>
+			<if test="name != null and name != ''">
+				m1.name like CONCAT('%',#{name},'%') or m2.name like CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新菜单 -->
+	<update id="updateMenu" parameterType="SysMenu">
+		UPDATE sys_menu
+		<set>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="pid != null and pid !=''">
+				pid = #{pid},
+			</if>
+			<if test="power != null and power !=''">
+				power = #{power},
+			</if>
+			<if test="tips != null and tips !=''">
+				tips = #{tips},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!--根据ID查询此菜单下级-->
+	<select id="findSunMenuById" resultType="SysMenu">
+		SELECT id,name FROM sys_menu
+		<where>
+			pid = #{id}
+		</where>
+	</select>
+	
+    <!--删除菜单-->
+	<delete id="deleteMenu" parameterType="string">
+        DELETE FROM sys_menu
+        <where>
+			id = #{id}
+		</where>
+    </delete>
+    
+    <!--查询所有菜单(树形)-->
+	<select id="findMenuTree" resultType="MenuDTO">
+		SELECT id,pid,name as label FROM sys_menu
+	</select>
+
+</mapper>

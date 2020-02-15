@@ -1,0 +1,16 @@
+<form bindsubmit='tixianTap' report-submit>
+  <view>
+    <view class='titleView'>
+      <view class='title-text'>提现金额(元)</view>
+      <view class='title-money'>¥{{canCommission}}</view>
+    </view>
+
+    <view style='width: 100%;height: 2rpx;background: #FFF;'>
+      <view style='width: 710rpx;height: 2rpx;background: #E9E8E8;margin:0 20rpx;'></view>
+    </view>
+    <view class='remark'>可提现金额{{canCommission}}元</view>
+    <view class='result'>
+      <button class='button' form-type='submit'>确认提现</button>
+    </view>
+  </view>
+</form>

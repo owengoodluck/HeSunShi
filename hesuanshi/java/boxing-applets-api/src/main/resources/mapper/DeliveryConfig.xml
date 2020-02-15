@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.DeliveryConfigDao">
+	<select id="query" resultType="DeliveryConfig">
+		select id,formula,first_weight as firstWeight, continued_weight as continuedWeight,first_cost as firstCost, continued_cost as continuedCost from delivery_config limit 1
+	</select>
+</mapper>

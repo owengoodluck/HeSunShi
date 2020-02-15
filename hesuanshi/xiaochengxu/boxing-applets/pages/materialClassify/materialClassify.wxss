@@ -1,0 +1,138 @@
+.fenlei {
+  width: 100%;
+  height:100%;
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.fenlei-list-left {
+  background: #fff;
+  width: 164rpx;
+  height: 100%;
+  display: block;
+}
+
+.scrollblock {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-item-text {
+  width: 164rpx;
+  text-align: center;
+  font-size: 14px;
+  color: #000;
+  line-height: 35rpx;
+  font-weight: bold;
+}
+
+.srcoll-baike {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.iconView {
+  margin-top: 28rpx;
+  text-align: center;
+}
+
+.icon {
+  width: 500rpx;
+  height: 194rpx;
+  border-radius: 12rpx;
+}
+
+.fenleilist-item {
+  width: 232rpx;
+  margin: 50rpx 0rpx 0rpx 30rpx;
+  display: inline-block;
+  text-align: center;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listItem-name {
+  height: 18px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #000;
+  line-height: 18px;
+  margin-top: 8rpx;
+}
+
+.listItem-icon {
+  width: 232rpx;
+  height: 232rpx;
+  border-radius:4px;
+}
+
+.materialClassifyHead {
+  height: 78rpx;
+  background-color: #f7f7f7;
+  width: 100%;
+  line-height: 78rpx;
+}
+.head-tab {
+  color: #2b2b2b;
+  width: 50%;
+  text-align: left;
+  font-size: 28rpx;
+  margin-left: 20rpx;
+}
+
+.head-tab-all {
+  color: #696969;
+  width: 50%;
+  text-align: right;
+  font-size: 24rpx;
+  margin-right: 20rpx;
+}
+.typeClassifyList{
+  height: 100%;
+  margin-top: 20rpx;
+}
+.libin{
+    display: grid;
+    width: 100%;
+
+    overflow-x: hidden;
+    /* 设置列、行大小 fr单位是等分分配列空间*/
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 300rpx 300rpx;
+    /* 有多余数据时，自动添加新行时默认行高为：200rpx */
+    grid-auto-rows: 300rpx;
+    /* 设置网格线大小 */
+    grid-gap: 10rpx;
+}
+
+.item{
+    background-color: white;
+    text-align: center;
+}
+.item-image{
+  width: 100%;
+  align-items:center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.item-text{
+  margin: 10rpx;
+  font-size: 24rpx;
+}
+.item-custom{
+  width: 94.5%;
+  height: 228rpx;
+  border:1px dotted #888888;
+}

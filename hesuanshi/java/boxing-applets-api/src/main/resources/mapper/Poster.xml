@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PosterDao">
+	<!-- 查询列表 -->
+	<select id="queryList" resultType="Poster">
+		select * from poster
+	</select>
+	<!-- 查询海报根据id -->
+	<select id="queryDetailById" parameterType="long" resultType="Poster">
+		select * from poster
+		<where>
+	    	id = #{id}
+		</where>
+	</select>
+</mapper>

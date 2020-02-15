@@ -1,0 +1,14 @@
+<view>
+  <view class='title'>
+    <view class="title-text">余额账户(元)</view>
+    <view class='title-money'>{{money}}</view>
+  </view>
+  <view class='rowView' bindtap='rechargeTap'>
+    <image class='rowImg' src='/images/money.png'></image>
+    <text class='rowText'>充值</text>
+  </view>
+  <view class='rowView' bindtap='mingxiTap'>
+    <image class='rowImg' src='/images/mingxi.png'></image>
+    <text class='rowText'>明细</text>
+  </view>
+</view>

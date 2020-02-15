@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantOrderDao">
+
+
+	<resultMap type="MerchantOrderVO" id="merchantOrderVOMap">
+		<result column="id" property="id" />
+		<result column="orderId" property="orderId" />
+		<collection property="orderDetailVO" ofType="OrderDetailVO" select="getOrderDetailVO" column="orderId"></collection>
+	</resultMap>
+	
+	<!-- 根据商户id及状态查询订单信息 -->
+ 	<select id="selectMerchantOrderByStatus" resultMap="merchantOrderVOMap">
+		SELECT m.id,
+			   m.order_id as orderId,
+			   o.order_number as orderNumber,
+			   o.business_number as businessNumber,
+			   date_format(o.create_time,'%Y-%m-%d %H:%i') as createTime,
+			   o.remark as userRemark, 
+			   m.remark as merchantRemark, 
+			   o.fare_type as fareType,
+			   m.money
+		FROM merchant_order m LEFT JOIN order_user o ON m.order_id = o.id
+		<where>
+		 	m.merchant_id = #{merchantId} AND m.status = #{merchantOrderStatus}
+		 	<if test="userOrderStatus != -1">
+				AND o.status = #{userOrderStatus}
+			</if>
+		</where>
+		ORDER BY o.create_time DESC
+	</select>
+
+ 	<select id="getOrderDetailVO" resultType="OrderDetailVO">
+		SELECT id,
+			   order_id as orderId,
+			   type,
+			   price,
+			   fare,
+			   status,
+<!--			   quantity,-->
+			   specification_name as specificationName,
+			   type_name as typeName,
+			   type_image as typeImage,
+			   material_name as materialName,
+			   material_image as materialImage,
+			   layout_name as layoutName,
+			   layout_image as layoutImage,
+			   print_method_name as printMethodName,
+			   length,
+			   width,
+			   height
+		FROM order_detail
+		<where>
+		 	order_id = #{orderId}
+		</where>
+	</select>
+	
+	<!-- 根据商户id查询订单详情-->
+  	<select id="findOrderDetailByMerchantOrderId" resultMap="merchantOrderVOMap">
+		SELECT m.id,
+			   m.order_id as orderId,
+			   o.order_number as orderNumber,
+			   o.business_number as businessNumber,
+			   date_format(o.create_time,'%Y-%m-%d %H:%i') as createTime,
+			   o.remark as userRemark, 
+			   m.remark as merchantRemark, 
+			   o.fare_type as fareType,
+			   m.money
+		FROM merchant_order m LEFT JOIN order_user o ON m.order_id = o.id
+		<where>
+		 	m.id = #{merchantOrderId}
+		</where>
+	</select>
+	
+	<!-- 确认接单 -->
+    <update id="confirm">
+		UPDATE merchant_order m LEFT JOIN order_user o ON m.order_id = o.id
+		<set>
+			 m.status = 1,
+			 m.update_time= now(),
+			 o.merchant_status = 2,
+			 o.status = 91,
+			 o.update_time = now()
+		</set>
+		<where>
+			m.id = #{id}
+		</where>
+	</update>
+	
+	<!-- 驳回订单 -->
+    <update id="reject">
+		UPDATE merchant_order m LEFT JOIN order_user o ON m.order_id = o.id
+		<set>
+			 m.status = 2,
+			 m.reason = #{reason},
+			 m.update_time = now(),
+			 o.merchant_status = 3,
+			 o.update_time = now()
+		</set>
+		<where>
+			m.id = #{id}
+		</where>
+	</update>
+	
+	<!-- 备注订单 -->
+    <update id="remark">
+		UPDATE merchant_order
+		<set>
+			 remark = #{remark},
+			 update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 查询我的金额页面数据-->
+ 	<select id="selectSettlementData" resultType="SettlementDataVO">
+		SELECT a.totalCommission,
+			   b.pendingCommission,
+			   c.canCommission,
+			   d.yesterdayCommission,
+			   e.unconfirmed,
+			   f.confirmed
+		FROM 
+			(SELECT SUM(commission) as totalCommission FROM merchant_commission WHERE merchant_id = #{merchantId}) a,
+			(SELECT SUM(commission) as pendingCommission FROM merchant_commission WHERE merchant_id = #{merchantId} AND status = 0) b,
+			(SELECT SUM(commission) as canCommission FROM merchant_commission WHERE merchant_id = #{merchantId} AND status = 1) c,
+			(SELECT SUM(commission) as yesterdayCommission FROM merchant_commission WHERE merchant_id = #{merchantId} AND TO_DAYS(NOW())-TO_DAYS(create_time) = 1) d,
+			(SELECT COUNT(id) as unconfirmed FROM merchant_order WHERE merchant_id = #{merchantId} AND status = 0) e,
+			(SELECT COUNT(id) as confirmed FROM merchant_order WHERE merchant_id = #{merchantId} AND status = 1) f
+	</select>
+	
+	<!-- 根据状态查询商户订单-->
+  	<select id="findMerchantOrderByStatus" resultType="MerchantOrder">
+		SELECT id,
+			   merchant_id as merchantId,
+			   order_id as orderId,
+			   money,
+			   remark,
+			   status,
+			   reason,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+		FROM merchant_order
+		<where>
+		 	status = #{status}
+		</where>
+	</select>
+	
+	<!-- 超时未处理,自动驳回 -->
+    <update id="updateStatus">
+		UPDATE merchant_order
+		<set>
+			 reason = #{reason},
+			 status = #{status},
+			 update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

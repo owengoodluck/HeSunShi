@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantStaffDao">
+	<!-- 添加商户人员信息-->
+	<insert id="insert" parameterType="MerchantStaff" useGeneratedKeys="true" keyProperty="id"> 
+        insert into merchant_staff (
+        	merchant_id,
+        	phone,
+        	contact,
+        	type,
+        	unionid,
+        	service_number_openid,
+      		create_time,
+      		update_time
+        )
+        values(
+        	#{merchantId},
+        	#{phone},
+        	#{contact},
+        	#{type},
+        	#{unionid},
+        	#{serviceNumberOpenid},
+	        now(),
+	        now()
+        )
+    </insert>
+	<!-- 更新商户人员信息-->
+    <update id="update" parameterType="MerchantStaff">
+		update merchant_staff
+		<set>
+			<if test="phone != null and phone !=''">
+				phone = #{phone},
+			</if>
+			<if test="contact != null and contact !=''">
+				contact = #{contact},
+			</if>
+			<if test="unionid != null and unionid !=''">
+				unionid = #{unionid},
+			</if>
+			<if test="serviceNumberOpenid != null and serviceNumberOpenid !=''">
+				service_number_openid = #{serviceNumberOpenid},
+			</if>
+			update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	<!-- 根据手机号查看商户人员信息  -->
+	<select id="selectByPhone" resultType="MerchantStaff">
+		select *, service_number_openid as serviceNumberOpenid from merchant_staff 
+		<where>
+	    	phone = #{phone}
+		</where>
+	</select>
+	
+	<!-- 根据商户人员ID查询 -->
+	<select id="selectStaffByMerchantId" resultType="MerchantStaff">
+		SELECT * FROM merchant_staff 
+		<where>
+	    	merchant_id = #{userId} AND type = 2
+		</where>
+	</select>
+	
+	<!--删除店员-->
+	<delete id="delete">
+        DELETE FROM merchant_staff
+        <where>
+			id = #{staffId}
+		</where>
+    </delete>
+</mapper>

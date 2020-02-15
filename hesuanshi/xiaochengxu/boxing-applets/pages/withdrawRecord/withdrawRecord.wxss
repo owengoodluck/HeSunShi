@@ -1,0 +1,15 @@
+.listTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  height: 74rpx;
+}
+
+.text {
+  display: block;
+  color: #000;
+  font-size: 14px;
+  text-align: center;
+}

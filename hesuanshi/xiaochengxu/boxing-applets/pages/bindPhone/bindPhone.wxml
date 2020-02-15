@@ -1,0 +1,37 @@
+<view>
+  <view class='border'>
+    <view style='display:flex;justify-content:space-around;font-size:16px;height:55px;line-height: 55px;text-align: center;background-color: #FFFFFF;color:#888888;margin: 20rpx;'>
+      <text class='{{currentIndex==-1?"active":"active1"}}' style='width: 50%' bindtap='xuanzhe' data-index='-1'>微信授权</text>
+      <text class='{{currentIndex==0?"active":"active1"}}' style='width: 50%' bindtap='xuanzhe' data-index='0'>手动输入</text>
+    </view>
+
+    <view style='display:flex;justify-content:space-around;margin-top: 60rpx;'>
+      <image class='img' src='{{avatar}}'></image>
+    </view>
+    <view wx:if='{{currentIndex == -1}}'>
+      <view style='display:flex;justify-content:space-around;margin-top: 20rpx;'>
+        <text style='font-size:13px;color:#888888;'>{{nickName}}</text>
+      </view>
+      <view style='display:flex;justify-content:space-around;margin-top: 82rpx;'>
+        <text style='font-size:14px;color:#888888;'>授权后将自动获取您微信绑定的手机号</text>
+      </view>
+      <view class='add_btn' style='margin-top: 32rpx;'>
+        <button class='subButton' bindgetphonenumber="getPhoneNumber" open-type="getPhoneNumber">微信授权</button>
+      </view>
+    </view>
+    <view wx:if='{{currentIndex == 0}}'>
+      <view style='display:flex;margin-top: 40rpx;border-bottom:1px solid #EEE;margin-left:50rpx;margin-right:50rpx;'>
+        <image class='img1'style='padding-top:12rpx;' src='/images/phone.png'></image>
+        <input class='input' type='number'style='margin-left:12rpx;' value='{{phone}}' bindchange="phoneChange" placeholder='请输入手机号'></input>
+      </view>
+      <view style='display:flex;margin-top: 60rpx;border-bottom:1px solid #EEE;margin-left:50rpx;margin-right:50rpx;'>
+        <image class='img1'style='padding-top:12rpx;' src='/images/yanzhengma.png'></image>
+        <input class='input' type='number'style='margin-left:12rpx;width: 180rpx;' value='{{phoneCode}}' bindchange="phoneCodehange" placeholder='请输入验证码'></input>
+        <text style='font-size:14px;color:rgba(255,137,141,1);padding-top:8rpx;margin-left: 140rpx;' bindtap='pCodeTap'>{{tips}}</text>
+      </view>
+      <view class='add_btn'style='margin-top: 40rpx;'>
+        <button class='subButton' bindtap="submit">绑定</button>
+      </view>
+    </view>
+  </view>
+</view>

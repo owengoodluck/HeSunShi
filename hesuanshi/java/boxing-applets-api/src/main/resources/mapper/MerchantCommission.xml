@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantCommissionDao">
+
+	<!-- 添加商户佣金记录-->
+	<insert id="insert" parameterType="MerchantCommission" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO merchant_commission (
+				        	merchant_id,
+				        	order_id,
+				        	commission,
+				      		create_time,
+				      		update_time
+        			)
+        			VALUES(
+				        	#{merchantId},
+				        	#{orderId},
+				        	#{commission},
+					        now(),
+					        now()
+        			)
+    </insert>
+
+	<!-- 提交提现后把成功的改为提现中并把提现记录id修改一下 -->
+    <update id="updateStatusAndWithdrawRecordId">
+		UPDATE merchant_commission
+		<set>
+			merchant_withdraw_id = #{merchantWithdrawId},
+			status = 2,
+			update_time = now()
+		</set>
+		<where>
+			merchant_id = #{merchantId} AND status = 1
+		</where>
+	</update>
+	
+	<!-- 佣金记录列表 -->
+	<select id="findCommissionRecord" resultType="MerchantCommission">
+    	SELECT commission,
+    		   status,
+    		   date_format(create_time,'%Y-%m-%d') as createTime
+    	FROM merchant_commission
+    	<where>
+    		merchant_id = #{merchantId}
+    	</where>
+    	ORDER BY create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,106 @@
+<exchange id="projectName" bind:cancelEvent="_cancelEvent"></exchange>
+<project id="projectSelect" bind:cancelEvent="_cancelAddProject"></project>
+<view class='content'>
+  <view class="page-section page-section-spacing swiper">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="home-swiper">
+        <block wx:for="{{homeImagesCard}}" wx:key="*this">
+          <swiper-item>
+            <view class="home-swiper-item">
+            <image src="{{item}}" mode="aspectFit" class="home-swiper-item-image"></image>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  <!--
+  <view class='layout_image'>
+    <image src='{{calculated.typeImage}}' style='width:{{windowWidth-100}}px;height:{{windowWidth-100}}px;'></image>
+  </view>
+  -->
+  <!--
+  <view class='layout_name'>{{calculated.layoutName}}</view>
+  <view class='price' wx:if='{{isShow == 1}}'>
+    <view class='total_price'>{{calculated.price}}元</view>
+    <view class='piece_price'>单价：{{unitPrice}}元/个</view>
+  </view>
+  -->
+  <view class='price' wx:if='{{isShow == 0}}'>
+    <view class='main_prompt'>温馨提示</view>
+    <view class='subtitle_prompt'>由于你选择自定义包装，请保存方案，等待系统报价。</view>
+  </view>
+  <view>
+    <view class='block'>
+      <!--<image src='{{calculated.typeImage}}' style='width:60rpx;height:60rpx;margin-right:28rpx;'></image>-->
+      <icon class="iconfont icon-hexing"></icon>
+      <text class='block_title'>盒型</text>
+      <text class='block_content'>{{calculated.typeName}}</text>
+    </view>
+    <view class='block'>
+      <!--<image src='{{calculated.materialImage}}' style='width:60rpx;height:60rpx;margin-right:28rpx;'></image>-->
+      <icon class="iconfont icon-caizhi"></icon>
+      <text class='block_title'>材质</text>
+      <text class='block_content'>{{calculated.materialName}}</text>
+    </view>
+    <view class='block'>
+      <icon class="iconfont icon-yinshua"></icon>
+      <text class='block_title'>印刷</text>
+      <text class='block_content'>{{calculated.printMethodName}}</text>
+    </view>
+    <view class='block'>
+      <icon class="iconfont icon-chicun"></icon>
+      <text class='block_title'>尺寸</text>
+      <text class='block_content'>{{calculated.length}}cm*{{calculated.width}}cm*{{calculated.height}}cm</text>
+    </view>
+    <view class='block' style='border-bottom: 1rpx solid #FFF;'>
+      <icon class="iconfont icon-shuliang"></icon>
+      <text class='block_title'>数量</text>
+      <text class='block_content'>{{calculated.piece}}</text>
+    </view>
+    <view class="block additional">
+      <icon class="iconfont icon-zengjia"></icon>
+      <text class='block_additional' bindtap='addProject'>额外增加项目需求</text>
+    </view>
+  </view>
+  
+  <view class='one_result' wx:if='{{isShow == 0}}' bindtap='saveCustom' data-type='2'>
+    <button class='button'>保存方案</button>
+  </view>
+</view>
+<view class="content context-text">
+    <view class="section">
+      <view class="flex-wrp" style="flex-direction:row;display:flex;">
+        <view class="flex-item tab">方案金额</view>
+        <view class="flex-item tab-value">356.78元</view>
+      </view>
+      <view class="flex-wrp" style="flex-direction:row;display:flex;">
+        <view class="flex-item tab">运费</view>
+        <view class="flex-item tab-value">23.00元</view>
+      </view>
+      <view class="block"></view>
+      <view class="flex-wrp" style="flex-direction:row;display:flex;">
+        <view class="flex-item tab">总计</view>
+      </view>
+      <view class="flex-wrp" style="flex-direction:row;display:flex;">
+        <view class="flex-item">
+          <view class="text-money">{{calculated.price}}元</view>
+          <view class="text-price">{{unitPrice}}元/个</view>   
+        </view>
+        <view class="flex-item">
+          
+            <button type="button" class="share-button">
+            <view class="button-text">分享拼单</view>
+            <view class="button-text">可优惠200元</view>          
+            </button>
+          
+        </view>
+      </view>
+      <view class="flex-wrp" style="flex-direction:row;display:flex;">
+        <view class="flex-item delivery-time">预订6天交货</view>
+      </view>
+    </view>
+  </view>
+<view class='two_result' wx:if='{{isShow == 1}}'>
+  <button class='save_button' style='width:{{windowWidth/3}}px;' bindtap='saveCustom' data-type='1'>保存方案</button>
+  <button class='order_button' style='width:{{windowWidth*2/3}}px;' bindtap='ordersubmit'>预付{{calculated.advancePaymentPrice}}元</button>
+</view>
+

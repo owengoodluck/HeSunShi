@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.UserDao">
+	<!-- 分页查询用户信息 -->
+	<select id="queryUserByPage" resultType="User">
+		select id,
+			   avatar,
+			   nick_name as nickName,
+			   gender,
+			   province,
+			   city,
+			   phone,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime 
+		from user
+		<where>
+		    1=1
+		    <if test="name != null and name !=''">
+			   and nick_name  like concat('%',#{name},'%')
+    		</if>
+		</where>
+	</select>
+
+	<!-- 根据用户id查询openId -->
+	<select id="findOpenidById" resultType="string">
+		SELECT quote_openid FROM user WHERE id = #{userId}
+	</select>
+	
+	<!-- 根据手机号码查询用户 -->
+	<select id="findUserByPhone" resultType="User">
+		SELECT id,
+			   avatar,
+			   nick_name as nickName
+		FROM user WHERE phone LIKE CONCAT('%',#{phone},'%') AND service_number_openid != ''
+	</select>
+	
+	<!-- 根据用户id查询邀请的用户列表-->
+	<select id="findUserByRecommenderId" resultType="User">
+		SELECT id,
+			   avatar,
+			   nick_name as nickName,
+			   gender,
+			   province,
+			   city,
+			   phone,
+			   date_format(create_time,'%Y-%m-%d') as createTime
+		FROM user
+		<where>
+			recommender_id = #{uId}
+		</where>
+		ORDER BY create_time DESC
+	</select>
+</mapper>

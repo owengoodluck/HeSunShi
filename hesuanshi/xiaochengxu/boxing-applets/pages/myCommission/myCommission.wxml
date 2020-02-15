@@ -1,0 +1,53 @@
+<view>
+  <view class='titleView'>
+    <view class='title-text'>当前累计收益(元)</view>
+    <view class='title-money'>{{commissionData.totalCommission}}</view>
+    <view class='title-pending'>包含待结算{{commissionData.pendingCommission}}元</view>
+  </view>
+  <view class='yesterdayView'>
+    <view style='width: {{windowWidth/2}}px;display: flex;flex-direction: column;text-align: center;'>
+      <view class='title-text'>昨日收益(元)</view>
+      <view class='yesterday-number'>{{commissionData.yesterdayCommission}}</view>
+      <view class='title-pending'>待结算{{commissionData.yesterdayPending}}元</view>
+    </view>
+    <view style='width: {{windowWidth/2-1}}px;display: flex;flex-direction: column;text-align: center;border-left: 2rpx solid #F2F2F2;'>
+      <view class='title-text'>昨日新增客户(人)</view>
+      <view class='yesterday-number'>{{commissionData.yesterdayInvite}}</view>
+      <view class='title-pending'>努力加油哦</view>
+    </view>
+  </view>
+  <view style='width: 100%;height: 2rpx;background: #FFF;'>
+    <view style='width: 710rpx;height: 2rpx;background: #E9E8E8;margin:0 20rpx;'></view>
+  </view>
+  <view class='tixianView'>
+    <view class='tixianView_left'>
+      <text class='tixianView_text'>可提现佣金{{commissionData.canCommission}}元</text>
+    </view>
+    <view class='tixianView_right' bindtap='tixianTap'>
+      <text class='title-text'>立即提现</text>
+      <image src='/images/left.png' class='tixianView_right_icon'></image>
+    </view>
+    <view style='clear:both;'></view>
+  </view>
+  <view class='totalView'>
+      <view class='totalItem' bindtap='inviteTap'>
+        <text class='totalNum'>{{commissionData.totalInvite}}</text>
+        <text class='totalText'>累计客户</text>
+      </view>
+      <view class='totalItem'>
+        <text class='totalNum'>{{commissionData.shareNumber}}</text>
+        <text class='totalText'>累计邀请</text>
+      </view>
+      <view class='totalItem' bindtap='goCommissionTap'>
+        <text class='totalNum'>{{commissionData.recordNumber}}</text>
+        <text class='totalText'>收益订单</text>
+      </view>
+  </view>
+  <button bindtap='homeTap'>
+    <image src='/images/goHome.png' class='home'></image>
+  </button>
+  <view class='bottom-btn'>
+    <button class='btn' style='width:{{windowWidth/2}}px;background:#FF8130' open-type='share' bindtap='shareTap'>立即分享</button>
+    <button class='btn' style='width:{{windowWidth/2}}px;background: #E70010;' bindtap='createCodeTap'>生成二维码</button>
+  </view>
+</view>

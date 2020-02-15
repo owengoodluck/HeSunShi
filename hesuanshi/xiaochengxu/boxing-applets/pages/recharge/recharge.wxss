@@ -1,0 +1,46 @@
+page {
+  background: #f9f9f9;
+}
+
+.title {
+  height: 280rpx;
+  background: #fff;
+  padding-top: 56rpx;
+  border-top: 2px solid #f9f9f9;
+}
+
+.title-text {
+  font-size: 14px;
+  color: #333;
+  margin-left: 20rpx;
+}
+
+.title-money {
+  font-size: 58px;
+  color: #333;
+  margin: 30rpx 0 0 20rpx;
+}
+
+.placeholder {
+  font-size: 20px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(136, 136, 136, 1);
+}
+
+.subButton {
+  margin: 0 20rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #e70010;
+  border-radius: 25px;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button::after {
+  border: none;
+}

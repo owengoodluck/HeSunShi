@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PromoterDao">
+	<!-- 添加-->
+	<insert id="insert" parameterType="Promoter" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO promoter (
+        	user_id,
+  			real_name,
+  			phone,
+  			content,
+  			form_id,
+  			create_time,
+  			update_time
+        )
+        VALUES (
+        	#{userId},
+        	#{realName},
+        	#{phone},
+        	#{content},
+        	#{formId},
+	        now(),
+	        now()
+        )
+    </insert>
+    <!-- 更新-->
+    <update id="update" parameterType="Promoter">
+		UPDATE promoter
+		<set>
+			<if test="realName != null and realName !=''">
+				real_name = #{realName},
+			</if>
+			<if test="phone != null and phone !=''">
+				phone = #{phone},
+			</if>
+			<if test="content != null and content !=''">
+				content = #{content},
+			</if>
+			<if test="formId != null and formId !=''">
+				form_id = #{formId},
+			</if>
+			status = 0,
+			update_time = now()
+		</set>
+		<where>
+			user_id = #{userId}
+		</where>
+	</update>
+	
+	<!-- 根据用户id查询推广人员信息-->
+	<select id="findPromoterByUserId" resultType="Promoter">
+		SELECT *FROM promoter
+		<where>
+			user_id = #{userId}
+		</where>
+	</select>
+	
+	<!-- 增加邀请次数 -->
+	<update id="addNumber">
+		UPDATE promoter
+		<set>
+			number = number + 1,
+			update_time = now()
+		</set>
+		<where>
+			user_id = #{userId}
+		</where>
+	</update>
+</mapper>

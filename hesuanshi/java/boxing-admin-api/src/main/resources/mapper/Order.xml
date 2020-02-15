@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.OrderDao">
+	
+	<!-- 分页订单 -->
+	<select id="queryByPage" resultType="OrderVO">
+		select a.id,
+			   a.user_id as userId,
+ 			   b.nick_name as nickName,
+			   b.phone,
+			   a.order_number as orderNumber,
+			   a.business_number as businessNumber,
+			   a.contact_name as contactName,
+			   a.contact_phone as contactPhone,
+			   a.contact_address as contactAddress,
+			   a.remark,
+			   a.status,
+			   date_format(a.update_time,'%Y-%m-%d %H:%i') as updateTime,
+<!--			   a.fare_type as fareType,-->
+			   c.serial,
+			   d.name as expressName
+		from order_user a LEFT JOIN user b ON a.user_id = b.id
+						  LEFT JOIN order_express c ON c.order_id = a.id
+						  LEFT JOIN express d ON d.id = c.express_id
+		<where>
+			<if test="status != null and status != ''">
+				a.status = #{status}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				and a.order_number LIKE CONCAT('%',#{orderNumber},'%')
+			</if>
+		</where>
+		ORDER BY a.update_time DESC
+	</select>
+
+	<!-- 修改订单状态-->
+    <update id="updateStatus">
+		UPDATE order_user
+		<set>
+			 <if test="status == 2">
+				ship_time = now(),
+			 </if>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{orderId}
+		</where>
+	</update>
+	
+	<!-- 查询订单中已退款的订单详情条数 -->
+	<select id="queryTotalByOrderId" resultType="int">
+		 SELECT count(*) FROM order_detail 
+		 <where>
+		      order_id = #{orderId} AND status = 3
+		 </where>
+	</select>
+	
+	<!-- 更新订单详情状态-->
+	<update id="updateStatusByorderDetailId" parameterType="int">
+		UPDATE order_detail
+		<set>
+				status = 3,
+				update_time = now()
+		</set>
+		<where>
+			id = (SELECT order_detail_id FROM refund WHERE refundNumber = #{refundNumber})
+		</where>
+	</update>
+	
+	<!-- 根据订单id查询订单编号 -->
+	<select id="selectOrderNumberById" resultType="string">
+		 SELECT order_number FROM order_user 
+		 <where>
+		      id = #{orderId}
+		 </where>
+	</select>
+	
+	<!-- 分页订单(根据派单情况查询) -->
+	<select id="queryByPageAndMerchantStatus" resultType="OrderVO">
+		SELECT a.id,
+			   a.user_id as userId,
+ 			   b.nick_name as nickName,
+			   b.phone,
+			   a.order_number as orderNumber,
+			   a.business_number as businessNumber,
+			   a.contact_name as contactName,
+			   a.contact_phone as contactPhone,
+			   a.contact_address as contactAddress,
+			   a.remark,
+			   a.status,
+			   date_format(a.update_time,'%Y-%m-%d %H:%i') as updateTime,
+<!--			   a.fare_type as fareType,-->
+			   c.serial,
+			   d.name as expressName
+		FROM order_user a LEFT JOIN user b ON a.user_id = b.id
+						  LEFT JOIN order_express c ON c.order_id = a.id
+						  LEFT JOIN express d ON d.id = c.express_id
+		<where>
+			<if test="status != null and status != ''">
+				a.status = #{status}
+			</if>
+			<if test="merchantStatus != null and merchantStatus != ''">
+				AND a.merchant_status = #{merchantStatus}
+			</if>
+			<if test="orderNumber != null and orderNumber != ''">
+				AND a.order_number LIKE CONCAT('%',#{orderNumber},'%')
+			</if>
+		</where>
+		ORDER BY a.update_time DESC
+	</select>
+	
+	<!-- 修改订单厂家派单状态 -->
+    <update id="updateMerchantStatus">
+		UPDATE order_user
+		<set>
+			 merchant_status = #{merchantStatus},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

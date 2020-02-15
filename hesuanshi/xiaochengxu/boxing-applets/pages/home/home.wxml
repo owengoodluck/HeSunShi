@@ -1,0 +1,115 @@
+<view>
+
+  <view class="page-body">
+    <view class="page-section page-section-spacing swiper">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="home-swiper">
+        <block wx:for="{{homeImagesCard}}" wx:key="*this">
+          <swiper-item>
+            <view class="home-swiper-item">
+            <image src="{{item}}" mode="aspectFit" class="home-swiper-item-image"></image>
+            </view>           
+          </swiper-item>         
+        </block>
+      </swiper>
+    </view>
+
+    <view class="section">
+      <view class="flex-wrp" style="flex-direction:row;">
+        <view wx:for="{{classifyList5}}" wx:for-index="index" wx:key="index">
+          <view wx:if="{{index == classifyList5_on}}">
+            <view class="flex-item home-tab home-tab-active" bindtap='certainTap' data-id="{{item.id}}" data-name="{{item.name}}">{{item.name}}</view>
+          </view>
+          <view wx:if="{{index != classifyList5_on}}">
+          <view class="flex-item home-tab" bindtap='certainTap' data-id="{{item.id}}" data-name="{{item.name}}">{{item.name}}</view>
+          </view>
+        </view>
+        <view class="flex-item home-tab home-tab-more" bindtap='boxTypeTap'>
+        <icon class="iconfont icon-gengduo"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <form bindsubmit='calculatedTap' report-submit>
+    <view class='user_service'>
+      <!-- 
+      <view class='service_detail' bindtap='boxTypeTap'>
+        <view class='service_detail_left'>
+          <image src='{{calculated.typeImage}}' class='service_left_icon'></image>
+          <text class='service_text'>{{calculated.typeName}}</text>
+        </view>
+        <view class='service_detail_right'>
+          <image src='/images/home_left.png' class='service_right_icon'></image>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+      -->
+
+      <view class='service_detail' bindtap='boxMaterailTap'>
+        <view class='service_detail_left'>
+          <!--<image src='{{calculated.materialImage}}' class='service_left_icon'></image>-->
+          <icon class="iconfont icon-caizhi"></icon>
+          <text class="service_text_2">材质</text>
+          <text class='service_text'>{{calculated.materialName}}</text>
+        </view>
+        <view class='service_detail_right'>
+          <view class="service_text_3">更多材质<image src='/images/home_left.png' class='service_right_icon'></image></view>
+          
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+      <view class='service_detail' style='border-bottom: 1px solid #fff;' bindtap='boxPrintMethodTab'>
+        <view class='service_detail_left'>
+          <icon class="iconfont icon-yinshua"></icon>
+        <!--<image src='{{calculated.layoutImage}}' class='service_left_icon'></image>-->
+          <text class="service_text_2">印刷</text>
+          <text class='service_text'>{{calculated.printMethodName}}</text>
+        </view>
+        <view class='service_detail_right'>
+          <view class="service_text_3">了解印刷<image src='/images/home_left.png' class='service_right_icon'></image></view>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+    </view>
+    <view class='size'>
+      <!--<view>请输入尺寸要求</view>-->
+      <view class='size_content'>
+        <view class='size_block'>
+          <icon class="iconfont icon-chicun"></icon>
+          <text class="service_text_2">尺寸</text>
+          <text style='margin-left:28rpx;'>长</text>
+          <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindLengthInput" value='{{calculated.length}}'></input>
+          <text>宽</text>
+          <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindWidthInput" value='{{calculated.width}}'></input>
+          <text>高</text>
+          <input type='digit' placeholder='cm' style='padding-left:28rpx;width:100rpx;' placeholder-class='placeholder' bindinput="bindHeightInput" value='{{calculated.height}}'></input>
+        </view>
+        <view class='size_block'>
+          <icon class="iconfont icon-shuliang"></icon>
+          <text class="service_text_2">数量</text>
+          <input type='number' placeholder='请输入需求数量' style='margin-left:28rpx;' placeholder-class='placeholder' bindinput="bindPieceInput" value='{{calculated.piece}}'></input>
+        </view>
+        <!--       
+        <view class='size_block_bottom'>
+          <picker bindchange="bindPickerChange" value="{{index}}" range="{{printMethodArray}}">
+            <view class='size_block_bottom_left'>
+              <text>印刷</text>
+              <text class='size_block_bottom_text'>{{calculated.printMethodName}}</text>
+            </view>
+            <view class='size_block_bottom_right'>
+              <image src='/images/home_left.png' class='service_right_icon'></image>
+            </view>
+            <view style='clear:both;'></view>
+          </picker>
+        </view>
+         -->
+      </view>
+    </view>
+    <view class='result'>
+      <button class='button' form-type='submit'>计算金额</button>
+    </view>
+  </form>
+  <button open-type="contact">
+    <image src='/images/home_contact.png' class='contact'></image>
+  </button>
+</view>

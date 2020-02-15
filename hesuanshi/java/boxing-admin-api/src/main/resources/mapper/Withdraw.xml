@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.WithdrawDao">
+
+  	<!-- 根据用户id查询提现记录-->
+    <select id="findWithdrawByUserId" resultType="WithdrawVO">
+    	SELECT money,
+    		   status,
+    		   date_format(create_time,'%Y-%m-%d %H:%i') as time
+    	FROM withdraw_record
+    	<where>
+    		user_id = #{uId}
+    	</where>
+    	ORDER BY create_time DESC
+    </select>
+    
+    <!-- 查询提现记录列表-->
+    <select id="queryByPage" resultType="WithdrawVO">
+    	SELECT a.id,
+    		   a.money,
+    		   a.status,
+    		   date_format(a.create_time,'%Y-%m-%d %H:%i') as time,
+    		   a.form_id as formId,
+    		   a.user_id as uId,
+    		   b.real_name as name,
+    		   b.phone,
+    		   c.service_number_openid as openId,
+    		   c.nick_name as nickName
+    	FROM withdraw_record a LEFT JOIN promoter b ON a.user_id = b.user_id
+    						   LEFT JOIN user c ON c.id = a.user_id
+    	ORDER BY a.create_time DESC
+    </select>
+    
+    <!-- 修改提现记录状态-->
+    <update id="updateStatus">
+		UPDATE withdraw_record
+		<set>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

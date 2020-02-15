@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.CommissionRecordDao">
+
+	<insert id="insert" parameterType="CommissionRecord" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO commission_record (
+			  user_id,
+			  order_detail_id,
+			  price,
+			  commission,
+			  create_time,
+			  update_time
+        )
+        VALUES(
+        	#{userId},
+        	#{orderDetailId},
+        	#{price},
+        	#{commission},
+	        now(),
+	        now()
+        )
+    </insert>
+    
+    <!-- 查询我的金额页面数据-->
+ 	<select id="findCommissionData" resultType="CommissionDataVO">
+		SELECT a.totalCommission,
+			   b.pendingCommission,
+			   c.canCommission,
+			   d.yesterdayCommission,
+			   e.yesterdayPending,
+			   f.yesterdayInvite,
+			   g.recordNumber,
+			   p.shareNumber,
+			   u.totalInvite
+		FROM 
+			(SELECT COUNT(id) as totalInvite FROM user WHERE recommender_id = #{userId}) u,
+			(SELECT number as shareNumber FROM promoter WHERE user_id = #{userId}) p,
+			(SELECT SUM(commission) as totalCommission FROM commission_record WHERE user_id = #{userId}) a,
+			(SELECT SUM(commission) as pendingCommission FROM commission_record WHERE user_id = #{userId} AND status = 0) b,
+			(SELECT SUM(commission) as canCommission FROM commission_record WHERE user_id = #{userId} AND status = 1) c,
+			(SELECT SUM(commission) as yesterdayCommission FROM commission_record WHERE user_id = #{userId} AND TO_DAYS(NOW())-TO_DAYS(create_time) = 1) d,
+			(SELECT SUM(commission) as yesterdayPending FROM commission_record WHERE user_id = #{userId} AND status = 0 AND TO_DAYS(NOW())-TO_DAYS(create_time) = 1) e,
+			(SELECT COUNT(id) as yesterdayInvite FROM user WHERE recommender_id = #{userId} AND TO_DAYS(NOW())-TO_DAYS(create_time) = 1) f,
+			(SELECT COUNT(id) as recordNumber FROM commission_record WHERE user_id = #{userId}) g
+	</select>
+	
+	<!-- 提交提现后把成功的改为提现中并把提现记录id修改一下 -->
+    <update id="updateStatusAndWithdrawRecordId">
+		UPDATE commission_record
+		<set>
+			withdraw_record_id = #{withdrawRecordId},
+			status = 2,
+			update_time = now()
+		</set>
+		<where>
+			user_id = #{userId} AND status = 1
+		</where>
+	</update>
+	
+	<!-- 佣金记录列表 -->
+	<select id="findCommissionRecord" resultType="CommissionRecord">
+    	SELECT commission,
+    		   status,
+    		   date_format(create_time,'%Y-%m-%d') as time,
+    		   price
+    	FROM commission_record
+    	<where>
+    		user_id = #{userId}
+    	</where>
+    	ORDER BY create_time DESC
+    </select>
+</mapper>

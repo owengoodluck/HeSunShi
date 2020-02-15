@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.ResourceFileDao">
+	<!-- 添加-->
+	<insert id="insert" parameterType="ResourceFile" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO resource_file (
+     		type,
+     		name,
+     		resource_number,
+     		file,
+     		create_time,
+     		update_time
+        ) VALUES(
+      		#{type},
+      		#{name},
+      		#{resourceNumber},
+      		#{file},
+      		now(),
+      		now()
+        )
+    </insert>
+    
+    <!--删除-->
+	<delete id="delete" parameterType="ResourceFile">
+        DELETE FROM resource_file
+        <where>
+			resource_number = #{resourceNumber} AND file = #{file}
+		</where>
+    </delete>
+    
+    <!-- 根据编号查询资源列表-->
+	<select id="findResourceByNumber" resultType="ResourceFile">
+		SELECT id,
+			   type,
+			   name,
+			   resource_number as resourceNumber,
+			   file,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+		FROM resource_file 
+		WHERE resource_number = #{number} order by type
+	</select>
+	
+	<!-- 根据类型和编号查询资源列表-->
+	<select id="findResourceByTypeAndNumber" resultType="ResourceFile">
+		SELECT id,
+			   type,
+			   name,
+			   resource_number as resourceNumber,
+			   file,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+		FROM resource_file 
+		WHERE resource_number = #{number} and type = #{type}
+	</select>
+</mapper>

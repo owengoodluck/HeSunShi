@@ -1,0 +1,30 @@
+<view>
+  <view wx:if='{{status == 0}}'>
+    <image src='/images/promoter_status0.png' class='title'></image>
+    <view class='text' style='margin-top: 56rpx;'>您的申请已受理，系统正在审核中</view>
+    <view class='text'>请耐心等待…</view>
+    <view class='bottom-btn'>
+      <button class='btn' style='width:{{windowWidth}}px;background: #E70010;' bindtap='goHomeTap'>返回首页</button>
+    </view>
+  </view>
+  <view wx:elif='{{status == 1}}'>
+    <image src='/images/promoter_status1.png' class='title'></image>
+    <view class='text' style='margin-top: 56rpx;'>您好，您的申请已经通过</view>
+    <view class='text'>立即分享赚取佣金吧～</view>
+    <view class='bottom-btn'>
+      <button class='btn' style='width:{{windowWidth/2}}px;background:#FF8130' open-type='share' bindtap='shareTap'>立即分享</button>
+      <button class='btn' style='width:{{windowWidth/2}}px;background: #E70010;' bindtap='createCodeTap'>生成二维码</button>
+    </view>
+  </view>
+  <view wx:elif='{{status == 2}}'>
+    <image src='/images/promoter_status2.png' class='title'></image>
+    <view class='text' style='margin-top: 56rpx;'>您好，抱歉您的申请未通过。</view>
+    <view class='text'>请重新申请…</view>
+    <view class='bottom-btn'>
+      <button class='btn' style='width:{{windowWidth}}px;background: #E70010;' bindtap='registerAgainTap'>再次申请</button>
+    </view>
+  </view>
+  <button wx:if='{{status == 1 || status == 2}}' bindtap='homeTap'>
+    <image src='/images/goHome.png' class='home'></image>
+  </button>
+</view>

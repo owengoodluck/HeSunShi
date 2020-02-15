@@ -1,0 +1,10 @@
+<view>
+  <view class='title'>
+    <view class="title-text">充值金额(元)</view>
+    <input type='digit' placeholder='请输入充值金额(元)' style='font-size: 58px;color: #333;margin: 30rpx 0 0 20rpx;height: 162rpx;' placeholder-class='placeholder' bindinput="bindMoneyInput"></input>
+  </view>
+  <view style='margin-top: 152rpx;'>
+    <button class='subButton' bindtap="rechargeTap">立即付款</button>
+  </view>
+
+</view>

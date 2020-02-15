@@ -1,0 +1,46 @@
+.border {
+  margin: 20rpx;
+  width: 710rpx;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  text-align: center;
+  padding-bottom: 54rpx;
+}
+
+.logo {
+  margin-top: 54rpx;
+  width: 148rpx;
+  height: 148rpx;
+  border-radius: 74rpx;
+}
+
+.gs-name {
+  margin-top: 24rpx;
+  height: 24px;
+  font-size: 17px;
+  color: rgba(0, 0, 0, 1);
+  line-height: 24px;
+}
+
+.loginBtn {
+  font-size: 17px;
+  height: 98rpx;
+  color: #fff;
+  background: #E60113;
+  line-height: 98rpx;
+  border-radius: 49rpx;
+  margin: 114rpx 44rpx 0 44rpx;
+}
+
+.shuoming {
+  margin-top: 20rpx;
+  height: 18px;
+  font-size: 13px;
+  color: rgba(102, 102, 102, 1);
+  line-height: 18px;
+}
+
+button::after {
+  border: none;
+}

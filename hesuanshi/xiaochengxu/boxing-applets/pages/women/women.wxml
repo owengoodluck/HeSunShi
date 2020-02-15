@@ -1,0 +1,5 @@
+<view class='border'>
+  <image src='/images/logo.png' class='logo'></image>
+  <view class='gs-name'>创无纸境</view>
+  <view class='content'>创无纸境是国内首家包装行业B2B2C全产业链互联网垂直服务平台,通过整合高度碎片化的传统包装行业的上下游各环节,用互联网思维赋能传统行业, 优化产业链条, 重塑产业生态, 共享产业繁荣, 构建以数据驱动为价值的产业互联网生态体系.</view>
+</view>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.ExpressDao">
+
+	<!--  根据订单id查询订单的快递信息 -->
+	<select id="findExpressDetail" resultType="ExpressDetailVO">
+		SELECT oe.serial,
+			   e.icon,
+			   e.name,
+			   e.type,
+			   e.phone,
+			   ou.contact_address as address
+		FROM order_user ou  LEFT JOIN order_express oe ON oe.order_id = ou.id 
+							  LEFT JOIN  express e ON  oe.express_id = e.id
+		<where>
+			ou.id = #{orderId}
+		</where>
+	</select>
+	
+	<!--查询快递-->
+	<select id="getExpress" resultType="Express">
+		SELECT *FROM express
+	</select>
+	
+</mapper>

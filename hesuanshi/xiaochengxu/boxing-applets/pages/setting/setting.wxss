@@ -1,0 +1,33 @@
+.item {
+  border-bottom: 1px solid rgba(151, 151, 151, 0.1);
+  height: 116rpx;
+}
+
+.title {
+  height: 116rpx;
+  font-size: 16px;
+  color: rgba(51,51,51,1);
+  line-height: 116rpx;
+}
+
+.img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+}
+
+.subButton {
+  height: 100rpx;
+  line-height: 100rpx;
+  background: #e70010;
+  border-radius: 25px;
+  font-size: 16px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button::after {
+  border: none;
+}

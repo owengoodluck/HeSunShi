@@ -1,0 +1,10 @@
+<view>
+  <view wx:if='{{status == 0}}'>
+    <image src='/images/promoter_status0.png' class='title'></image>
+    <view class='text' style='margin-top: 56rpx;'>您的申请已受理，系统正在审核中</view>
+    <view class='text'>请耐心等待…</view>
+    <view class='bottom-btn'>
+      <button class='btn' style='width:{{windowWidth}}px;background: #E70010;' bindtap='goHomeTap'>返回首页</button>
+    </view>
+  </view>
+</view>

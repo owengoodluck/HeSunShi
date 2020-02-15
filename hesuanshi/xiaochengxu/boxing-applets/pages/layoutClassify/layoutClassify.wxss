@@ -1,0 +1,78 @@
+.fenlei {
+  width: 100%;
+  height:100%;
+  display: flex;
+  margin-top: 30rpx;
+}
+
+.fenlei-list-left {
+  background: #fff;
+  width: 164rpx;
+  height: 100%;
+  display: block;
+}
+
+.scrollblock {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-item-text {
+  width: 164rpx;
+  text-align: center;
+  font-size: 14px;
+  color: #000;
+  line-height: 35rpx;
+  font-weight: bold;
+}
+
+.srcoll-baike {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.iconView {
+  margin-top: 28rpx;
+  text-align: center;
+}
+
+.icon {
+  width: 500rpx;
+  height: 194rpx;
+  border-radius: 12rpx;
+}
+
+.fenleilist-item {
+  width: 232rpx;
+  margin: 30rpx 0rpx 0rpx 30rpx;
+  display: inline-block;
+  text-align: center;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listItem-name {
+  height: 18px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #000;
+  line-height: 18px;
+  margin-top: 8rpx;
+}
+
+.listItem-icon {
+  width: 232rpx;
+  height: 232rpx;
+  border-radius:4px;
+}

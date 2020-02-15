@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PrintMethodDao">
+	<!-- 查询列表 -->
+	<select id="queryList" resultType="PrintMethod">
+		select * from print_method
+		<where>
+			status = 1 
+		</where>
+	</select>
+	<!-- 查询靠近的区间价格 -->
+	<select id="queryNear" resultType="PrintMethodPrice">
+		select * from print_method_price
+		<where>
+			print_method_id = #{printMethodId}
+			and piece &gt;= #{piece}
+		</where>
+		order by piece
+		limit 1
+	</select>
+</mapper>

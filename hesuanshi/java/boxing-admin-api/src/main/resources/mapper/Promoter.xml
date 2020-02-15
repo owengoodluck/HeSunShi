@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PromoterDao">
+	<!-- 分页查询通知人员 -->
+	<select id="queryByPage" resultType="Promoter">
+		SELECT a.id,
+			   a.phone,
+			   date_format(a.create_time,'%Y-%m-%d %H:%i') as createTime,
+			   a.content,
+			   a.real_name as realName,
+			   a.commission_rate as commissionRate,
+			   a.status,
+			   a.form_id as formId,
+			   a.remark,
+			   b.id as uId,
+			   b.avatar,
+			   b.nick_name as nickName
+		FROM promoter a LEFT JOIN user b ON a.user_id = b.id
+		<where>
+		1=1
+			<if test="name != null and name != ''">
+				and	a.real_name LIKE CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	
+	<!-- 修改佣金比例  -->
+	<update id="updateRate" parameterType="Promoter">
+		UPDATE promoter
+		<set>
+			commission_rate = #{commissionRate},
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 修改推广人员的状态 -->
+	<update id="updateStatus">
+		UPDATE promoter
+		<set>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+			status = #{status},
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+</mapper>

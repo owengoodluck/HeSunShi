@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "exchange": "/component/exchange/index",
+    "project": "/component/project/project"
+  }
+}

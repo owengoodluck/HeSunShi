@@ -1,0 +1,156 @@
+<view>
+  <view class='tabView'>
+    <view class='{{tabIndex==1?"active":"active1"}} activePublic' bindtap='selTab' data-index='1'>已存方案</view>
+    <view class='{{tabIndex==2?"active":"active1"}} activePublic' bindtap='selTab' data-index='2'>等待报价</view>
+    <view class='{{tabIndex==3?"active":"active1"}} activePublic' bindtap='selTab' data-index='3'>已预付</view>
+    <view class='{{tabIndex==4?"active":"active1"}} activePublic' bindtap='selTab' data-index='4'>已下单</view>
+  </view>
+  <view style='margin-top: 108rpx;'>
+
+  <!-- ----------------------------------------已保存方案--------------------------------------- -->
+    <view wx:if='{{tabIndex==1}}' class='order' wx:for="{{dataList}}" wx:key="{{index}}" data-index='{{index}}'>
+      <view style='border-bottom:2rpx solid #E9E9E9;'>
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:15px;color:#888;'> 方案编号: {{item.customNumber}}</view>
+        </view>
+        <view style="float:right;display:flex;align-items: center;height:88rpx;" bindtap='delTap' data-id='{{item.id}}'>
+          <image src='/images/shanchu.png' style='width: 30rpx; height: 30rpx;'></image>
+          <view style='font-size:15px;color:#888;margin-left: 6rpx;'> 删除</view>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+      <view style='display:flex;margin-top: 20rpx;'>
+        <!-- 
+        <view style='height: 188rpx;line-height: 188rpx;'>
+          <image wx:if='{{item.selected == 1}}' src='/images/xuanzhong.png' class='icon' data-index='{{index}}' bindtap='selectedTap' data-selected='{{0}}'></image>
+          <image wx:elif='{{item.selected == 0}}' src='/images/weixuanzhong.png' class='icon' data-index='{{index}}' bindtap='selectedTap' data-selected='{{1}}'></image>
+        </view> 
+        -->
+        <view style='display:flex;' bindtap='editTap' data-index='{{index}}'>
+          <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;margin-left: 10rpx;'></image>
+          <view style='margin-left: 20rpx; width: 400rpx;'>
+            <view style='font-size:15px;color:#000;' class='one-rows'> {{item.name}}</view>
+            <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+          </view>
+        </view>
+      </view>
+      <view style='font-size:14px;height: 88rpx;display: flex;justify-content: space-around;align-items: center;'>
+        <view style='color: #E70010;'>¥{{item.price}}</view>
+        <view style='color: #888;'>运费: {{item.fare}}</view>
+        <view style='color: #888;'>x {{item.piece}}</view>
+      </view>
+      <view>
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:12px;color:#888;width: 500rpx;' class='one-rows'>文件上传链接：https://admin.cwzjapp.com/#/upload/1/{{item.customNumber}}</view>
+        </view>
+        <view style="float:right;display:flex;align-items: center;height:88rpx;" bindtap='copyText' data-text="https://admin.cwzjapp.com/#/upload/1/{{item.customNumber}}">
+          <image src='/images/fuzhi.png' style='width: 24rpx; height: 24rpx;'></image>
+          <view style='font-size:12px;color:#888;margin-left: 6rpx;'> 复制</view>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+    </view>
+
+  <!-- ----------------------------------------等待报价--------------------------------------- -->
+    <view wx:if='{{tabIndex==2}}' class='order' wx:for="{{dataList}}" wx:key="{{index}}" data-index='{{index}}'>
+      <view style='height:88rpx;border-bottom:2rpx solid #E9E9E9;'>
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:15px;color:#888;'> 方案编号: {{item.customNumber}}</view>
+        </view>
+        <view style="float:right;display:flex;align-items: center;height:88rpx;" bindtap='delTap' data-id='{{item.id}}'>
+          <image src='/images/shanchu.png' style='width: 30rpx; height: 30rpx;'></image>
+          <view style='font-size:15px;color:#888;margin-left: 6rpx;'> 删除</view>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+      <view style='display:flex;margin-top: 20rpx;padding-bottom: 20rpx;align-items: center;' bindtap='editTap' data-index='{{index}}'>
+        <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+        <view style='margin-left: 20rpx;'>
+          <view style='font-size:15px;color:#000;' class='one-rows'> {{item.name}}</view>
+          <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 数量：{{item.piece}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+        </view>
+      </view>
+    </view>
+
+ <!-- ----------------------------------------已预付--------------------------------------- -->
+    <view wx:if='{{tabIndex==3}}' class='order' wx:for="{{dataList}}" wx:key="{{index}}" data-index='{{index}}'>
+      <view style='height:88rpx;border-bottom:2rpx solid #E9E9E9;'>
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:15px;color:#888;'> 方案编号: {{item.customNumber}}</view>
+        </view>
+       
+        <view style='clear:both;'></view>
+      </view>
+      <view style='display:flex;margin-top: 20rpx;padding-bottom: 20rpx;align-items: center;' bindtap='editTap' data-index='{{index}}'>
+        <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+        <view style='margin-left: 20rpx;'>
+          <view style='font-size:15px;color:#000;' class='one-rows'> {{item.name}}</view>
+          <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 数量：{{item.piece}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+        </view>
+      </view>
+    </view>
+
+    
+     <!-- ----------------------------------------已下单--------------------------------------- -->
+    <view wx:if='{{tabIndex==4}}' class='order' wx:for="{{dataList}}" wx:key="{{index}}" data-index='{{index}}'>
+      <view style='height:88rpx;border-bottom:2rpx solid #E9E9E9;'>
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:15px;color:#888;'> 方案编号: {{item.customNumber}}</view>
+        </view>
+  
+        <view style='clear:both;'></view>
+      </view>
+      <view style='display:flex;margin-top: 20rpx;padding-bottom: 20rpx;align-items: center;' bindtap='editTap' data-index='{{index}}'>
+        <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+        <view style='margin-left: 20rpx;'>
+          <view style='font-size:15px;color:#000;' class='one-rows'> {{item.name}}</view>
+          <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 数量：{{item.piece}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+          <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if='{{dataList.length == 0}}' class='noData'>
+      <image src='/images/kongbai.png' class='noData-icon'></image>
+      <view class='noData-text'>暂无数据</view>
+    </view>
+  </view>
+
+  <!-- 
+  <view wx:if='{{tabIndex==1 && dataList.length > 0}}' style='position: fixed;bottom:0;width: 100%;height: 100rpx;border:1px solid rgba(151,151,151,0.1);background: #fff;z-index: 6;'>
+    <view style='float:left;display:flex;align-items: center;'>
+      <view style='font-size: 16px;display: flex;align-items: center;justify-content: center;height: 100rpx;'>
+        <image wx:if='{{quanxuan == 1}}' src='/images/xuanzhong.png' class='icon' style='margin-left: 48rpx;' bindtap='quanxunaTap' data-quanxuan='{{0}}'></image>
+        <image wx:if='{{quanxuan == 0}}' src='/images/weixuanzhong.png' class='icon' style='margin-left: 48rpx;' bindtap='quanxunaTap' data-quanxuan='{{1}}'></image>
+        <text style='font-size:14px;font-family:PingFangSC-Regular;font-weight:500;color:#333333;margin-left: 12rpx;'>全选</text>
+      </view>
+    </view>
+    <view style='float:right;display:flex;align-items: center;'>
+      <view style='display: flex;align-items: center;justify-content: center;height: 100rpx;'>
+        <text style='font-size:14px;font-family:PingFangSC-Regular;font-weight:bold;color:#333333;text-align:right;margin-right: 16rpx;'>合计:</text>
+        <text style='font-size:18px;font-family:PingFangSC-Regular;font-weight:bold;color:#000000;text-align:right;margin-right: 16rpx;'>¥{{countPrice}}</text>
+        <button class='subBtn' style='margin-right: 20rpx;' bindtap='jiesuan'>去结算</button>
+      </view>
+    </view>
+    <view style='clear:both;'></view>
+  </view>
+   -->
+   
+  <button bindtap='homeTap'>
+    <image src='/images/add-fangan.png' class='home'></image>
+  </button>
+</view>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.RefundDao">
+
+	<!-- 添加一条退款信息-->
+	<insert id="insertRefund" parameterType="Refund" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO refund (    
+        	user_id,		
+			order_detail_id,
+  			reason,
+  			instruction,
+  			refundNumber,
+  			money,
+  			create_time,
+  			update_time
+        )
+        VALUES (
+        	#{userId},
+        	#{orderDetailId},
+        	#{reason},
+        	#{instruction},
+        	#{refundNumber},
+        	#{money},
+	        now(),
+	        now()
+        )
+    </insert>
+    
+    <!-- 添加退款附件-->
+	<insert id="insertRefundFile" parameterType="RefundFile"> 
+        INSERT INTO refund_file (    		
+			  refund_id,
+			  resource,
+			  create_time
+        )
+        VALUES (
+        	#{refundId},
+        	#{resource},
+	        now()
+        )
+    </insert>
+
+	<!-- 查询用户退款列表 -->
+	<select id="findRefundList" resultType="RefundVO">
+		SELECT r.status,
+			   r.money,
+			   od.quantity,
+			   ou.order_number as orderNumber,
+			   ou.business_number as businessNumber,
+			   od.specification_name as specificationName,
+			   od.type_name as typeName,
+			   od.material_name as materialName,
+			   od.layout_image as layoutImage,
+			   od.length,
+			   od.width,
+			   od.height
+		FROM refund r LEFT JOIN order_detail od ON od.id = r.order_detail_id
+					  LEFT JOIN order_user ou ON ou.id = od.order_id
+		<where>
+			r.user_id = #{userId}		
+		</where>
+		ORDER BY r.update_time DESC
+	</select>
+</mapper>

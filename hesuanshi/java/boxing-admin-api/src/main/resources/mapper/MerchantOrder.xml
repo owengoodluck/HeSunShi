@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantOrderDao">
+
+	<!-- 根据订单id查询商户派单 -->
+	<select id="findMerchantOrderByOrderId" resultType="MerchantOrderVO">
+		SELECT a.id,
+			   a.merchant_id as merchantId,
+			   a.money,
+			   a.status,
+			   date_format(a.create_time,'%Y-%m-%d %H:%i') as createTime,
+			   a.reason,
+			   b.name,
+			   b.phone,
+			   b.contact
+		FROM merchant_order a LEFT JOIN merchant b ON a.merchant_id = b.id
+		<where>
+			a.order_id = #{orderId}
+		</where>
+		ORDER BY a.create_time DESC
+	</select>
+	
+	<!-- 添加商户订单 -->
+	<insert id="insert" parameterType="MerchantOrderVO">
+        INSERT INTO merchant_order (
+					  	merchant_id,
+					  	order_id,
+					  	money,
+					  	create_time,
+					  	update_time
+        			) VALUES(
+        			  	#{merchantId},
+        			  	#{orderId},
+        			  	#{money},
+        			  	now(),
+        			  	now()
+        			)
+    </insert>
+	
+</mapper>

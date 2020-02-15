@@ -1,0 +1,37 @@
+<view>
+  <view class='border' wx:if='{{addressList.length > 0}}' wx:for='{{addressList}}' wx:key="{{index}}" data-index='{{index}}'>
+    <!-- 地址信息 -->
+    <view class="addressDetail border-bottom" bindtap='xuanze' data-index='{{index}}'>
+      <view class='name'>{{item.name}}</view>
+      <view class="phone">{{item.phone}}</view>
+      <view class='clear-both'></view>
+      <view class='address'>{{item.province}} {{item.city}} {{item.county}} {{item.address}}</view>
+    </view>
+    <view class="setMoren">
+      <view class='left' bindtap='setMoren' data-index='{{index}}'>
+        <image wx:if='{{item.status == 1}}' src='/images/xuanzhong.png' class='select'></image>
+        <image wx:else src='/images/weixuanzhong.png' class='select'></image>
+        <view class='setMorenText'>设为默认地址</view>
+      </view>
+      <view class="right">
+        <image src='/images/edit.png' class='editIcon'></image>
+        <view class='setMorenText' bindtap='editAddress' data-index='{{index}}'> 编辑</view>
+        <image src='/images/shanchu.png' class='delIcon'></image>
+        <view class='setMorenText' bindtap='delAddress' data-index='{{index}}'> 删除</view>
+      </view>
+      <view class='clear-both'></view>
+    </view>
+  </view>
+  <!-- 空白页 -->
+  <view wx:if='{{addressList.length == 0}}' class='noData'>
+    <image src='/images/kongbai.png' class='noData-icon'></image>
+    <view class='noData-text'>暂无数据</view>
+  </view>
+  <!-- 新增地址 -->
+  <view class='addAddressvView'>
+    <button class='subBtn textShenColor' bindtap='addAddress'>
+      <image src='/images/add.png' class='addAddressIcon'></image>
+      <text class='addAddressText'>新增收货地址</text>
+    </button>
+  </view>
+</view>

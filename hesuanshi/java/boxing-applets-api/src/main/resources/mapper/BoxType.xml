@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.BoxTypeDao">
+
+	<resultMap type="BoxTypeClassify" id="boxTypeClassifyMaps">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="boxTypeDetailList" ofType="BoxTypeDetail" select="queryClassifyDetail" column="id"></collection>
+	</resultMap>
+	
+	<!--查询分类前5个记录 -->
+	<select id="queryClassify5" resultType="BoxTypeDetail">
+		select * from box_type_detail
+		<where>
+			1=1 
+			and status = 1 
+		</where>
+			order by sort
+			limit 5
+	</select>
+	
+	<!--查询所有分类-->
+	<select id="queryClassifyDetailAll" resultType="BoxTypeDetail">
+		select * from box_type_detail
+		<where>
+			1=1 
+			and status = 1 
+		</where>
+			order by sort
+	</select>
+	
+	<!-- 查询分类 -->
+	<select id="queryClassify" resultMap="boxTypeClassifyMaps">
+		select * from box_type_classify
+		<where>
+			status = 1
+		</where>
+	</select>
+	<!-- 查询分类详情 -->
+	<select id="queryClassifyDetail" parameterType="long" resultType="BoxTypeDetail">
+		select id,name,image,min_piece as minPiece, max_piece as maxPiece,remark, reserve_num as reserveNum from box_type_detail
+		<where>
+	    	status = 1
+	    	and box_type_classify_id = #{id}
+		</where>
+	</select>
+	<!-- 查询分类详情(通过id) -->
+	<select id="queryClassifyDetailById" parameterType="long" resultType="BoxTypeDetail">
+		select id,name,image,min_piece as minPiece, max_piece as maxPiece,remark, valuation_formula as valuationFormula, reserve_num as reserveNum from box_type_detail
+		<where>
+	    	id = #{id}
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,24 @@
+<view>
+  <view class="fenlei">
+    <scroll-view scrollY class="fenlei-list-left">
+      <view style='padding-bottom:80px;'>
+        <view bindtap="chooseDetail" class="scrollblock" data-id="{{item.id}}" data-index="{{index}}" wx:for="{{classifyList}}" wx:key="{{index}}" style="background:{{currentIndex==index?'#fff':'transparent'}};">
+          <view class="list-item-text" style="color:{{currentIndex==index?'#E70010':'#333333'}};border-left:{{currentIndex==index?'3px solid #E70010':'0'}}">{{item.name}}</view>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view scrollY class="srcoll-baike">
+      <view style='padding-bottom:100px;'>
+        <view bindtap='chooseImage' style='margin-left:30rpx;'>
+          <image src='/images/chooseImage.png' style='width:496rpx;height:188rpx;'></image>
+        </view>
+        <view class="fenleilist-item" wx:for="{{classifyList[currentIndex].boxLayoutDetailList}}" wx:key="{{index}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="gotoDetail">
+          <view class='listItem'>
+            <image src='{{item.image}}' class="listItem-icon"></image>
+            <text class="listItem-name">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.RefundDao">
+
+	<!-- 分页退款-->
+	<select id="queryByPage" resultType="RefundVO">
+		SELECT a.id,
+			   a.user_id as userId,
+ 			   b.nick_name as nickName,
+			   b.phone,
+			   a.refundNumber,
+			   a.reason,
+			   a.instruction,
+			   a.money,
+			   a.status,
+			   a.order_detail_id as orderDetailId,
+			   c.order_id as orderId
+		FROM refund a LEFT JOIN user b ON a.user_id = b.id
+					  LEFT JOIN order_detail c ON c.id = a.order_detail_id
+		<where>
+			<if test="status != null and status != ''">
+				a.status = #{status}
+			</if>
+			<if test="refundNumber != null and refundNumber != ''">
+				AND a.refundNumber LIKE CONCAT('%',#{refundNumber},'%')
+			</if>
+			<if test="userName != null and userName != ''">
+				AND b.nick_name LIKE CONCAT('%',#{userName},'%')
+			</if>
+		</where>
+		ORDER BY a.update_time DESC
+	</select>
+	
+	<!-- 根据退款id查询附件 -->
+	<select id="findRefundFileById" resultType="RefundFileVO">
+		SELECT *FROM refund_file WHERE refund_id = #{id}
+	</select>
+	
+	<!-- 修改状态-->
+    <update id="updateStatus">
+		UPDATE refund
+		<set>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 处理退款时更新退款状态-->
+	<update id="updateStatusByrefundNumber" parameterType="String">
+		UPDATE refund
+		<set>
+				status = #{status}
+		</set>
+		<where>
+			refundNumber = #{refundNumber}
+		</where>
+	</update>
+</mapper>

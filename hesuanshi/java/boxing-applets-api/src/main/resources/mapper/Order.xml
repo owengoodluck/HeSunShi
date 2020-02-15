@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.OrderDao">
+
+	<!-- 添加订单-->
+	<insert id="insertOrder" parameterType="CustomOrder" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO order_user (
+        	  user_id,
+			  order_number,
+			  business_number,
+			  contact_name,
+			  contact_phone,
+			  contact_address,
+			  create_time,
+			  update_time,
+			  remark
+        )
+        VALUES(
+        	#{userId},
+        	#{orderNumber},
+        	#{businessNumber},
+        	#{contactName},
+        	#{contactPhone},
+        	#{contactAddress},
+	        now(),
+	        now(),
+	        #{remark}
+        )
+    </insert>
+
+	<!-- 修改订单状态-->
+    <update id="updateStatus">
+		UPDATE order_user
+		<set>
+			 <if test="status == 1">
+				pay_time = now(),
+			 </if>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			business_number = #{outTradeNo}
+		</where>
+	</update>
+
+	<resultMap type="CustomOrderVO" id="customOrderVOMap">
+		<result column="id" property="id" />
+		<collection property="orderDetailVO" ofType="OrderDetailVO" select="getOrderDetailVO" column="id"></collection>
+	</resultMap>
+	
+	<!-- 根据用户id及订单状态查询订单信息 -->
+ 	<select id="findOrderByStatus" resultMap="customOrderVOMap">
+		SELECT id,
+			   user_id as userId,
+			   order_number as orderNumber,
+			   business_number as businessNumber,
+			   contact_name as contactName,
+			   contact_phone as contactPhone,
+			   contact_address as contactAddress,
+			   status,
+			   remark
+<!--			   fare_type as fareType-->
+		FROM order_user
+		<where>
+		 	user_id = #{userId}
+		 	<if test="status != -1">
+				AND status = #{status}
+			</if>
+		</where>
+		ORDER BY create_time DESC
+	</select>
+
+ 	<select id="getOrderDetailVO" resultType="OrderDetailVO">
+		SELECT id,
+			   order_id as orderId,
+			   type,
+			   price,
+			   fare,
+			   status,
+		       piece,
+		       name as name,
+			   type_name as typeName,
+			   material_name as materialName,
+			   layout_name as layoutName,
+			   layout_image as layoutImage,
+			   length,
+			   width,
+			   height
+		FROM order_detail
+		<where>
+		 	order_id = #{id}
+		</where>
+	</select>
+
+	<!-- 根据状态查询所有订单 -->
+ 	<select id="findAllOrderByStatus" resultMap="customOrderVOMap">
+		SELECT id,
+			   user_id as userId,
+			   order_number as orderNumber,
+			   business_number as businessNumber,
+			   contact_name as contactName,
+			   contact_phone as contactPhone,
+			   contact_address as contactAddress,
+			   status,
+			   remark,
+			   date_format(ship_time,'%Y-%m-%d %H:%i') as shipTime
+<!--			   fare_type as fareType -->
+		FROM order_user
+		<where>
+		 	status = #{status}
+		</where>
+	</select>
+	
+	<!-- 根据微信交易编号查询订单详情-->
+ 	<select id="findOrderDetailByOutTradeNo" resultMap="customOrderVOMap">
+		SELECT id,
+			   user_id as userId,
+			   order_number as orderNumber,
+			   business_number as businessNumber,
+			   contact_name as contactName,
+			   contact_phone as contactPhone,
+			   contact_address as contactAddress,
+			   status,
+			   remark,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+<!--			   fare_type as fareType -->
+		FROM order_user
+		<where>
+		 	business_number = #{outTradeNo}
+		</where>
+	</select>
+	
+	<!-- 根据修改订单状态 -->
+	<update id="updateOrderStatus">
+		UPDATE order_user
+		<set>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{orderId}
+		</where>
+	</update>
+
+	<!-- 根据修改订单支付状态 -->
+	<update id="updatePayStatus">
+		UPDATE order_user
+		<set>
+			pay_status = #{payStatus},
+			update_time= now()
+		</set>
+		<where>
+			id = #{orderId}
+		</where>
+	</update>
+
+	<!-- 根据修改订单厂家状态 -->
+	<update id="updateMerchantStatus">
+		UPDATE order_user
+		<set>
+			merchant_status = #{merchantStatus},
+			update_time= now()
+		</set>
+		<where>
+			id = #{orderId}
+		</where>
+	</update>
+	
+	
+	<!-- 根据订单id修改订单表为收货,订单详情为完成,佣金记录为成功-->
+	<update id="updateOrderAndDetail">
+		UPDATE order_user ou LEFT JOIN order_detail od ON od.order_id = ou.id AND od.status = 0
+							 LEFT JOIN commission_record cr ON cr.order_detail_id = od.id AND cr.status = 0
+							 LEFT JOIN merchant_commission mc ON mc.order_id = ou.id
+		<set>
+			 ou.status = 3,
+			 ou.update_time= now(),
+			 od.status = 1,
+			 od.update_time= now(),
+			 cr.status = 1,
+			 cr.update_time= now(),
+			 mc.status = 1,
+			 mc.update_time= now()
+		</set>
+		<where>
+			ou.id = #{orderId}
+		</where>
+	</update>
+	
+	<!-- 根据订单id修改商户交易编号-->
+	<update id="updateBusinessNumberById">
+		UPDATE order_user
+		<set>
+			 business_number = #{string},
+			 update_time= now()
+		</set>
+		<where>
+			id = #{orderId}
+		</where>
+	</update>
+	
+	<!-- 查询不同状态订单的条数-->
+ 	<select id="findOrderNum" resultType="OrderNumVO">
+		SELECT a.pendingPay,b.pendingDelivery,c.pendingReceipt,d.refund FROM 
+			(SELECT COUNT(id) as pendingPay FROM order_user WHERE user_id = #{userId} AND status = 0) a ,
+			(SELECT COUNT(id) as pendingDelivery FROM order_user WHERE user_id = #{userId} AND status = 1) b,
+			(SELECT COUNT(id) as pendingReceipt FROM order_user WHERE user_id = #{userId} AND status = 2) c,
+			(SELECT COUNT(id) as refund FROM refund WHERE user_id = #{userId}) d;
+	</select>
+	
+	<!-- 根据订单id查询收货信息 -->
+ 	<select id="selectAddressById" resultType="CustomOrderVO">
+		SELECT id,
+			   contact_name as contactName,
+			   contact_phone as contactPhone,
+			   contact_address as contactAddress
+		FROM order_user
+		<where>
+		 	id = #{id}
+		</where>
+	</select>
+
+
+	<select id="findByOrderId" resultType="CustomOrderVO">
+		SELECT id,
+			user_id as userId,
+			order_number as orderNumber,
+			business_number as businessNumber,
+			contact_name as contactName,
+			contact_phone as contactPhone,
+			contact_address as contactAddress,
+			create_time as createTime,
+			update_time as updateTime,
+			remark as remark,
+			status as status
+<!--			fare_type  as fareType-->
+		FROM order_user
+		<where>
+			id = #{orderId}
+		</where>
+	</select>
+</mapper>

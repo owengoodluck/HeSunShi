@@ -1,0 +1,30 @@
+<view>
+  <view wx:if='{{dataList.length > 0}}' class='order' wx:for="{{dataList}}" wx:key="{{index}}" data-index='{{index}}'>
+    <!-- 订单状态 -->
+    <view style='margin:0px 20rpx;border-bottom:1px solid rgba(151,151,151,0.1);'>
+      <view style='float:left;font-size:14px;font-weight:bold;color:#333333;height:88rpx;line-height: 88rpx;'> 订单编号: {{item.orderNumber}}</view>
+      <!-- 0:退款中;1:退款成功; -->
+      <view wx:if='{{item.status == 0 || item.status == 3}}' style="float:right;height:88rpx;line-height: 88rpx;font-size:14px;color:#FF8500;"> 退款中</view>
+      <view wx:elif='{{item.status == 1}}' style="float:right;height:88rpx;line-height: 88rpx;font-size:14px;color:#999;">退款成功</view>
+      <view wx:elif='{{item.status == 2}}' style="float:right;height:88rpx;line-height: 88rpx;font-size:14px;color:#FB6363;">退款失败</view>
+      <view style='clear:both;'></view>
+    </view>
+    <view style='display:flex; align-items: center;padding: 20rpx;border-bottom:1px solid rgba(151,151,151,0.1);' bindtap='detailTap' data-businessNumber='{{item.businessNumber}}'>
+      <image src='{{item.layoutImage}}' style='width: 200rpx;height: 200rpx;border-radius: 8rpx;'></image>
+      <view style='margin-left: 20rpx;'>
+        <view style='font-size:14px;font-weight:bold;color:#333;'class='one-rows'>{{item.specificationName}}</view>
+        <view style='font-size:12px;color:#999;margin-top:8rpx;'>盒型：{{item.typeName}}</view>
+        <view style='font-size:12px;color:#999;'>数量：{{item.quantity}}</view>
+        <view style='font-size:12px;color:#999;'>材质：{{item.materialName}}</view>
+        <view style='font-size:12px;color:#999;'>尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+      </view>
+    </view>
+    <!-- 退款金额 -->
+    <view style='font-size:14px;font-weight:bold;color:#333;height:88rpx;line-height: 88rpx;margin:0px 20rpx;'> 退款金额: ¥{{item.money}}</view>
+  </view>
+  <!-- 空白页 -->
+  <view wx:if='{{dataList.length == 0}}' class='noData'>
+    <image src='/images/kongbai.png' class='noData-icon'></image>
+    <view class='noData-text'>暂无数据</view>
+  </view>
+</view>

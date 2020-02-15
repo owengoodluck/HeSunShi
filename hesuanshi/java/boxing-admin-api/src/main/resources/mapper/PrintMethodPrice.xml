@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PrintMethodPriceDao">
+	
+	<!-- 添加印刷方式价格 -->
+	<insert id="insert" parameterType="PrintMethodPrice">
+        INSERT INTO print_method_price (
+        			print_method_id,
+        			piece,
+        			price,
+        			create_time,
+        			update_time
+        		) 
+	        	VALUES(
+        			#{printMethodId},
+        			#{piece},
+        			#{price},
+        			now(),
+        			now()
+	        	)
+    </insert>
+    
+    <!-- 分页查询印刷方式价格 -->
+	<select id="queryByPage" resultType="PrintMethodPrice">
+		SELECT a.id, 
+			   a.price,
+			   a.piece,
+			   b.id as printMethodId,
+			   b.name as printMethodName
+		FROM print_method_price a LEFT JOIN print_method b ON a.print_method_id = b.id
+		<where>
+			<if test="printMethodId != null and printMethodId != ''">
+				a.print_method_id = #{printMethodId}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新印刷方式价格 -->
+	<update id="update" parameterType="PrintMethodPrice">
+		UPDATE print_method_price
+		<set>
+			<if test="printMethodId != null and printMethodId !=''">
+				print_method_id = #{printMethodId},
+			</if>
+			<if test="piece != null and piece !=''">
+				piece = #{piece},
+			</if>
+			<if test="price != null and price !=''">
+				price = #{price},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!--删除价格区间 -->
+	<delete id="delete" parameterType="int">
+        DELETE FROM print_method_price
+        <where>
+			id = #{id}
+		</where>
+    </delete>
+</mapper>

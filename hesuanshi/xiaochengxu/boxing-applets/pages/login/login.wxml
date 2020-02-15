@@ -1,0 +1,6 @@
+<view class='border'>
+  <image src='/images/logo.png' class='logo'></image>
+  <view class='gs-name'>创无纸境</view>
+  <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class='loginBtn'>授权登录</button>
+  <view class='shuoming'>授权后将获取您的公开信息（昵称、头像等）</view>
+</view>

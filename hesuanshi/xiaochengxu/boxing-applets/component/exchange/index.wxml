@@ -1,0 +1,11 @@
+<view class="dialog-gray" wx:if='{{showTolast}}' bind:tap='toggleToast'>
+    <view class="contain" catchtap="preD">
+        <view class="main">
+          <view class="title">温馨提示</view>
+          <view class="input">
+            <input bindinput="inputName" maxlength="10" placeholder="请输入方案名称" placeholderClass="input-placeholder" style='height:74rpx;'></input>
+          </view>
+          <view bind:tap="sendExchangeCode" class="btn">确定</view>
+        </view>
+    </view>
+</view>

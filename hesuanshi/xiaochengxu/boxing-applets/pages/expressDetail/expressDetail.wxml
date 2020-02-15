@@ -1,0 +1,61 @@
+<view>
+  <!-- 头部 -->
+  <view class='statusView'>
+    <view class='statusLeft'>
+      <image src='{{cover}}' class='head_img'></image>
+      <view class='head_status' wx:if='{{dataList.state == 0}}'>运输中</view>
+      <view class='head_status' wx:elif='{{dataList.state == 1}}'>已揽收</view>
+      <view class='head_status' wx:elif='{{dataList.state == 2}}'>疑难</view>
+      <view class='head_status' wx:elif='{{dataList.state == 3}}'>已签收</view>
+      <view class='head_status' wx:elif='{{dataList.state == 4}}'>退签</view>
+      <view class='head_status' wx:elif='{{dataList.state == 5}}'>同城派送中</view>
+      <view class='head_status' wx:elif='{{dataList.state == 6}}'>退回</view>
+      <view class='head_status' wx:elif='{{dataList.state == 7}}'>转单</view>
+    </view>
+    <view class="statusRight" bindtap='telPhone'>
+      <image class='kefuIcon' src='/images/kefu2.png'></image>
+      <view class='head_kefu'>物流客服</view>
+    </view>
+    <view class='clear-both'></view>
+  </view>
+  <!-- 快递公司及单号 -->
+  <view class='expressView'>
+    <image src='{{expressDetail.icon}}' class='expressIcon'></image>
+    <view>
+      <view class='expressName'>{{expressDetail.name}}</view>
+      <view class='expressPhone'>官方电话 {{expressDetail.phone}}</view>
+    </view>
+  </view>
+  <view class='expressNumber'>{{expressDetail.name}} {{expressDetail.serial}}</view>
+  <!-- 追踪 -->
+  <view class='border'>
+    <!-- 收货地址 -->
+    <view class='logisit'>
+      <view class='list'>
+        <image class='daImg' src='/images/shou.png'></image>
+        <view class='list_context_page'>
+          <lable class='context'>【收货地址】{{expressDetail.address}}</lable>
+        </view>
+      </view>
+    </view>
+    <!-- 物流信息 -->
+    <view class='logisit' wx:for="{{dataList.data}}" wx:key="key" data-index='{{index}}'>
+      <!-- 列表 -->
+      <view class='list'>
+        <!-- 运输中 -->
+        <image class='zhongImg' wx:if="{{dataList.data.length>1 && index == 0}}" src='/images/now.png'></image>
+        <!-- 揽收 -->
+        <image class='daImg' wx:if="{{index+1 == dataList.data.length}}" src='/images/lan.png'></image>
+        <!-- 小点点 -->
+        <image class='xiaoImg' wx:elif='{{index > 0 && index<= dataList.data.length}}' src='/images/dian.png'></image>
+        <view class='list_context_page'>
+          <!-- 列表名称 -->
+          <lable wx:if="{{dataList.data.length > 1 && index == 0}}" class='context contextBold'>{{item.context}}</lable>
+          <lable wx:if="{{index != 0}}" class='context'>{{item.context}}</lable>
+        </view>
+        <!-- 时间 -->
+        <view class='time'>{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+</view>

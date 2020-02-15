@@ -1,0 +1,40 @@
+<view>
+  <view class="section">
+    <view class="flex-wrp" style="flex-direction:row;display:flex;">
+      <view class="flex-item head-tab" bindtap='selectMethod' data-id="1">
+        <icon class="iconfont icon-caise icon-red"></icon>彩色印刷
+        <view class="line-red" wx:if="{{printMethodName == '彩色印刷'}}"></view>
+      </view>
+      <view class="flex-item head-tab" bindtap='selectMethod' data-id="2">
+        <icon class="iconfont icon-danse icon-gray"></icon>单色印刷
+        <view class="line-red" wx:if="{{printMethodName == '单色印刷'}}"></view>
+      </view>
+      <view class="flex-item head-tab" bindtap='selectMethod' data-id="3">
+        <icon class="iconfont icon-kongbai icon-white"></icon>空白不印
+        <view class="line-red" wx:if="{{printMethodName == '空白不印'}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="line"></view>
+  <view class="pringMethodContent">
+    <view wx:if="{{printMethodName == '彩色印刷'}}">
+      <view class="content-title">彩色印刷</view>
+      <view class="content-text">彩色印刷：彩色印刷指多个颜色印刷内容，含图片内等；</view>
+    </view>
+    <view wx:if="{{printMethodName == '单色印刷'}}">
+      <view class="content-title">单色印刷</view>
+      <view class="content-text">单色印刷：单色印刷指单个颜色印刷内容，含图片内等；</view>
+    </view>
+    <view wx:if="{{printMethodName == '空白不印'}}">
+      <view class="content-title">空白不印</view>
+      <view class="content-text">空白不印：空白不印不含任何图案、色彩印刷；</view>
+    </view>
+    <view class="content-img">
+      <image src="/images/yinshua.png" mode="widthFix" style="width:94.5%"></image>
+    </view>
+  </view>
+  <view class="printMthodBtn">
+    <button class='button' form-type='submit' bindtap='commitMethod'>确认选择</button>
+  </view>
+</view>

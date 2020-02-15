@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.WithdrawRecordDao">
+    
+    <!-- 新增一条佣金提现记录-->
+	<insert id="insertWithdrawRecord" parameterType="WithdrawRecord" useGeneratedKeys="true" keyProperty="id"> 
+        INSERT INTO withdraw_record (
+        	user_id,
+        	money,
+        	form_id,
+      		create_time,
+      		update_time
+        )
+        VALUES(
+        	#{userId},
+        	#{money},
+        	#{formId},
+	        now(),
+	        now()
+        )
+    </insert>
+    
+    <!-- 查询用户提现记录 -->
+    <select id="findTixianRecord" resultType="WithdrawRecord">
+    	SELECT money,
+    		   status,
+    		   date_format(create_time,'%Y-%m-%d') as time
+    	FROM withdraw_record
+    	<where>
+    		user_id = #{userId}
+    	</where>
+    	ORDER BY create_time DESC
+    </select>
+</mapper>

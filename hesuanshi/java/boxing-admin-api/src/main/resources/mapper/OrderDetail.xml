@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.OrderDetailDao">
+
+	<!-- 根据订单id查询订单详情 -->
+	<select id="findOrderDetailByOrderId" resultType="OrderDetailVO">
+		select a.id,
+			   a.price,
+			   a.quantity,
+			   a.fare,
+			   a.status,
+			   a.specification_name as specificationName,
+			   a.type_name as typeName,
+			   a.type_image as typeImage,
+			   a.material_name as materialName,
+			   a.material_image as materialImage,
+			   a.layout_name as layoutName,
+			   a.layout_image as layoutImage,
+			   a.print_method_name as printMethodName,
+			   a.length,
+			   a.width,
+			   a.height,
+			   a.form_id as formId,
+			   c.business_number as businessNumber,
+			   c.order_number as orderNumber,
+			   c.user_id as uId,
+			   c.fare_type as fareType
+		from order_detail a LEFT JOIN order_user c ON a.order_id = c.id
+		<where>
+			a.order_id = #{orderId}
+		</where>
+	</select>
+
+	<!-- 根据订单详情id查询订单详情-->
+	<select id="findOrderDetailByDetailId" resultType="OrderDetailVO">
+		select a.id,
+			   a.price,
+			   a.quantity,
+			   a.fare,
+			   a.status,
+			   a.specification_name as specificationName,
+			   a.type_name as typeName,
+			   a.type_image as typeImage,
+			   a.material_name as materialName,
+			   a.material_image as materialImage,
+			   a.layout_name as layoutName,
+			   a.layout_image as layoutImage,
+			   a.print_method_name as printMethodName,
+			   a.length,
+			   a.width,
+			   a.height
+		from order_detail a
+		<where>
+			a.id = #{orderDetailId}
+		</where>
+	</select>
+	
+	<!-- 改价-->
+	<update id="updatePrice" parameterType="OrderDetailVO">
+		UPDATE order_detail
+		<set>
+			price = #{price},
+			fare = #{fare},
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 根据订单id查询通知id -->
+	<select id="findFormIdByOrderId" resultType="string">
+		SELECT form_id 
+		FROM order_detail
+		<where>
+			order_id = #{orderId}
+		</where>
+		LIMIT 1
+	</select>
+</mapper>

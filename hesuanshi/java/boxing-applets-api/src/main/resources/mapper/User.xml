@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.UserDao">
+	<!-- 添加用户信息-->
+	<insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id"> 
+        insert into user (
+        	avatar,
+        	nick_name,
+        	gender,
+        	province,
+        	city,
+        	unionid,
+        	quote_openid,
+        	service_number_openid,
+      		create_time,
+      		update_time,
+      		recommender_id
+        )
+        values(
+        	#{avatar},
+        	#{nickName},
+        	#{gender},
+        	#{province},
+        	#{city},
+        	#{unionid},
+        	#{quoteOpenid},
+        	#{serviceNumberOpenid},
+	        now(),
+	        now(),
+	        #{recommenderId}
+        )
+    </insert>
+    <!-- 更新用户信息-->
+    <update id="update" parameterType="User">
+		update user
+		<set>
+			<if test="avatar != null and avatar !=''">
+				avatar = #{avatar},
+			</if>
+			<if test="nickName != null and nickName !=''">
+				nick_name = #{nickName},
+			</if>
+			<if test="gender != null and gender !=''">
+				gender = #{gender},
+			</if>
+			<if test="province != null and province !=''">
+				province = #{province},
+			</if>
+			<if test="city != null and city !=''">
+				city = #{city},
+			</if>
+			<if test="phone != null and phone !=''">
+				phone = #{phone},
+			</if>
+			<if test="unionid != null and unionid !=''">
+				unionid = #{unionid},
+			</if>
+			<if test="quoteOpenid != null and quoteOpenid !=''">
+				quote_openid = #{quoteOpenid},
+			</if>
+			<if test="serviceNumberOpenid != null and serviceNumberOpenid !=''">
+				service_number_openid = #{serviceNumberOpenid},
+			</if>
+			update_time= now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 根据用户id查询用户信息 -->
+	<select id="findUserById" resultType="User">
+		SELECT a.id,
+			   a.avatar,
+			   a.nick_name as nickName,
+			   a.gender,
+			   a.province,
+			   a.city,
+			   a.phone,
+			   a.quote_openid as openid,
+			   b.status
+		FROM user a LEFT JOIN user_company b ON a.id = b.user_id
+		<where>
+			a.id = #{userId}
+		</where>
+	</select>
+	
+	<!-- 根据用户id修改手机号码-->
+    <update id="updatePhone" parameterType="string">
+		UPDATE user
+		<set>
+			phone = #{phone},
+			update_time= now()
+		</set>
+		<where>
+			id = #{userId}
+		</where>
+	</update>
+	<!-- 根据unionid查看用户信息 -->
+	<select id="getUserByUnionid" resultType="User">
+		select * from user
+		<where>
+	    	unionid = #{unionid}
+		</where>
+	</select>
+	
+	<!-- 根据openid查询用户信息 -->
+	<select id="getUserByOpenid" resultType="User">
+		SELECT id,
+			   avatar,
+			   gender,
+			   nick_name as nickName,
+			   province,
+			   city,
+			   unionid,
+			   quote_openid as quoteOpenid,
+			   phone,
+			   recommender_id as recommenderId
+		FROM user
+		<where>
+			quote_openid = #{openid}
+		</where>
+	</select>
+	
+	<!-- 查询通知人员的服务号openid集合 -->
+	<select id="findServiceNumber" resultType="string">
+		SELECT b.service_number_openid
+		FROM notify_personnel a LEFT JOIN user b ON a.user_id = b.id
+		WHERE b.service_number_openid != ''
+	</select>
+	
+	<!-- 根据用户id查询他的推荐人的信息 -->
+	<select id="findRecommenderById" resultType="Promoter">
+		SELECT b.user_id as userId,
+			   b.phone,
+			   b.real_name as realName,
+			   b.content,
+			   b.commission_rate as commissionRate
+		FROM user a LEFT JOIN promoter b ON a.recommender_id = b.user_id
+		<where>
+			a.id = #{userId} AND b.status = 1
+		</where>
+	</select>
+	
+	<!-- 我邀请的用户列表 -->
+	<select id="findMyUser" resultType="User">
+		SELECT avatar,
+			   nick_name as nickName,
+			   date_format(create_time,'%Y-%m-%d') as createTime
+		FROM user
+		<where>
+			recommender_id = #{userId}
+		</where>
+		ORDER BY create_time DESC
+	</select>
+</mapper>

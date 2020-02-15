@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.SysUserDao">
+
+	<select id="queryUser" resultType="SysUser">
+		SELECT su.id as id,
+			   su.name as userName,
+			   su.roleid as roleIds
+			FROM sys_user su
+		<where>
+			su.account = #{account}
+			AND su.password = #{passWord}
+		</where>
+	</select>
+	
+	<!-- 分页查讯系统用户 -->
+	<select id="queryUserByPage" resultType="SysUser">
+		SELECT u.id, 
+			   u.account,
+			   u.name,
+			   u.password as passWord,
+			   date_format(u.createtime,'%Y-%m-%d %H:%i') as createTime,
+			   d.name as dept,
+			   d.id as deptid,
+			   u.roleid as roleIds
+		 FROM sys_user u LEFT JOIN sys_dept d ON u.deptid = d.id
+		<where>
+			<if test="name != null and name != ''">
+				u.name like CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新用户角色 -->
+	<update id="assignRole" parameterType="SysUser">
+		UPDATE sys_user
+		<set>
+			<if test="roleIds != null and roleIds !=''">
+				roleid = #{roleIds},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 添加系统用户-->
+	<insert id="insertUser" parameterType="SysUser">
+        INSERT INTO sys_user (name,account,password,deptid,roleid,createtime) 
+        VALUES(#{name},#{account},#{passWord},#{deptid},#{roleIds},now())
+    </insert>
+    
+    <!-- 根据系统用户id查询信息 -->
+    <select id="findSysUserByid" resultType="SysUser">
+		SELECT type,
+			   user_id as userid,
+			   deptid
+			FROM sys_user 
+		<where>
+			id = #{sysUserId}
+		</where>
+	</select>
+	
+	<!-- 根据部门ID查询部门下面的用户 -->
+	<select id="findSysUserByDeptId" resultType="SysUser">
+		SELECT id FROM sys_user
+		<where>
+	    	deptid = #{deptId}
+		</where>
+	</select>
+	
+</mapper>

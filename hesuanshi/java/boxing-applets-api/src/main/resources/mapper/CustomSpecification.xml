@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.CustomSpecificationDao">
+	<!-- 添加-->
+	<insert id="insert" parameterType="CustomSpecification" useGeneratedKeys="true" keyProperty="id"> 
+        insert into custom_specification (
+        	user_id,
+  			type,
+  			name,
+  			form_id,
+  			custom_number,
+  			type_id,
+  			type_name,
+  			type_image,
+  			material_id,
+  			material_name,
+  			material_image,
+  			layout_id,
+			layout_name,
+			layout_image,
+			print_method_id,
+			print_method_name,
+			length,
+			width,
+			height,
+			piece,
+			price,
+			advance_payment_price,
+			fare,
+			create_time,
+			update_time
+        )
+        values(
+        	#{userId},
+  			#{type},
+  			#{name},
+  			#{formId},
+  			#{customNumber},
+  			#{typeId},
+  			#{typeName},
+  			#{typeImage},
+  			#{materialId},
+  			#{materialName},
+  			#{materialImage},
+  			#{layoutId},
+			#{layoutName},
+			#{layoutImage},
+			#{printMethodId},
+			#{printMethodName},
+			#{length},
+			#{width},
+			#{height},
+			#{piece},
+			#{price},
+			#{advancePaymentPrice},
+			#{fare},
+	        now(),
+	        now()
+        )
+    </insert>
+    
+    <!-- 修改方案-->
+	<update id="update" parameterType="CustomSpecification">
+		update custom_specification
+		<set>
+			<if test="type != null and type !=''">
+				type = #{type},
+			</if>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="customNumber != null and customNumber !=''">
+				custom_number = #{customNumber},
+			</if>
+			<if test="typeId != null and typeId !=''">
+				type_id = #{typeId},
+			</if>
+			<if test="typeName != null and typeName !=''">
+				type_name = #{typeName},
+			</if>
+			<if test="typeImage != null and typeImage !=''">
+				type_image = #{typeImage},
+			</if>
+			<if test="materialId != null and materialId !=''">
+				material_id = #{materialId},
+			</if>
+			<if test="materialName != null and materialName !=''">
+				material_name = #{materialName},
+			</if>
+			<if test="materialImage != null and materialImage !=''">
+				material_image = #{materialImage},
+			</if>
+			<if test="layoutId != null and layoutId !=''">
+				layout_id = #{layoutId},
+			</if>
+			<if test="layoutName != null and layoutName !=''">
+				layout_name = #{layoutName},
+			</if>
+			<if test="layoutImage != null and layoutImage !=''">
+				layout_image = #{layoutImage},
+			</if>
+			<if test="printMethodId != null and printMethodId !=''">
+				print_method_id = #{printMethodId},
+			</if>
+			<if test="printMethodName != null and printMethodName !=''">
+				print_method_name = #{printMethodName},
+			</if>
+			<if test="length != null and length !=''">
+				length = #{length},
+			</if>
+			<if test="width != null and width !=''">
+				width = #{width},
+			</if>
+			<if test="height != null and height !=''">
+				height = #{height},
+			</if>
+			<if test="piece != null and piece !=''">
+				piece = #{piece},
+			</if>
+			<if test="advancePaymentPrice != null and advancePaymentPrice !=''">
+				advance_payment_price = #{advancePaymentPrice},
+			</if>
+
+			<if test="price != null and price !=''">
+				price = #{price},
+			</if>
+			<if test="fare != null and fare !=''">
+				fare = #{fare},
+			</if>
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 分页方案 -->
+	<select id="queryByPage" resultType="CustomSpecification">
+		select id,
+			   user_id as userId,
+			   type,
+			   name,
+			   custom_number as customNumber,
+			   type_id as typeId,
+			   type_name as typeName,
+			   type_image as typeImage,
+			   material_id as materialId,
+			   material_name as materialName,
+			   material_image as materialImage,
+			   layout_id as layoutId,
+			   layout_name as layoutName,
+			   layout_image as layoutImage,
+			   print_method_id as printMethodId,
+			   print_method_name as printMethodName,
+			   length,
+			   width,
+			   height,
+			   piece,
+		       advance_payment_price as advancePaymentPrice,
+			   price,
+			   fare,
+			   is_upload as isUpload
+		from custom_specification
+		<where>
+		    type = #{type} 
+		    and user_id = #{userId}
+		    and status = 1
+		</where>
+		order by update_time desc
+	</select>
+	
+	<!--修改状态-->
+	<update id="updateStatus">
+        update custom_specification
+        <set>
+        	status = #{status}
+        </set>
+        <where>
+			id = #{id}
+		</where>
+    </update>
+</mapper>

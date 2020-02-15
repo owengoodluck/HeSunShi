@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.SysRoleDao">
+	
+	<!-- 根据角色id查询菜单id字符串 -->
+	<select id="findMenuIdByRoleIds" resultType="string">
+		SELECT empower FROM sys_role WHERE id IN 
+    		<foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+    			#{item}
+    		</foreach>
+    		AND empower != ''
+	</select>
+	
+	<!-- 根据角色id批量启用角色-->
+	<update id="enableRoles" parameterType="List">
+		update sys_role
+		<set>
+			status = 1
+		</set>
+		<where>
+			id IN 
+			<foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+   				#{item}
+   			</foreach>
+		</where>
+	</update>
+	
+	<!-- 根据角色id批量禁用角色-->
+	<update id="disableRoles" parameterType="List">
+		update sys_role
+		<set>
+			status = 2
+		</set>
+		<where>
+			id IN 
+			<foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
+	</update>
+	
+	
+	<!-- 查询角色 -->
+	<select id="findRole" resultType="SysRole">
+		SELECT id, name as roleName FROM sys_role
+	</select>
+	
+	<!-- 添加角色 -->
+	<insert id="insertRole" parameterType="SysRole">
+        INSERT INTO sys_role (name,remark) VALUES(#{roleName},#{remark})
+    </insert>
+    
+    <!-- 分页查询角色 -->
+	<select id="queryRoleByPage" resultType="SysRole">
+		SELECT id, name as roleName,remark FROM sys_role
+		<where>
+			<if test="roleName != null and roleName != ''">
+				name LIKE CONCAT('%',#{roleName},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新角色 -->
+	<update id="updateRole" parameterType="SysRole">
+		UPDATE sys_role
+		<set>
+			<if test="roleName != null and roleName !=''">
+				name = #{roleName},
+			</if>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!--删除角色 -->
+	<delete id="deleteRole" parameterType="string">
+        DELETE FROM sys_role
+        <where>
+			id = #{id}
+		</where>
+    </delete>
+    
+    <!--查询角色的权限-->
+	<select id="getRoleEmpower" resultType="string">
+		SELECT empower FROM sys_role
+		<where>
+			id = #{id}
+		</where>
+	</select>
+	
+	<!-- 更新角色权限 -->
+	<update id="roleEmpower" parameterType="SysRole">
+		UPDATE sys_role
+		<set>
+			<if test="empower != null and empower !=''">
+				empower = #{empower},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 根据角色id查询角色名 -->
+	<select id="findRoleNameByRoleIds" resultType="string">
+		SELECT name FROM sys_role WHERE id IN 
+    		<foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+    			#{item}
+    		</foreach>
+	</select>
+</mapper>

@@ -1,0 +1,79 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/programDetail/programDetail",
+    "pages/calculated/calculated",
+    "pages/typeClassify/typeClassify",
+    "pages/materialClassify/materialClassify",
+    "pages/layoutClassify/layoutClassify",
+    "pages/typeDetail/typeDetail",
+    "pages/materialDetail/materialDetail",
+    "pages/layoutDetail/layoutDetail",
+    "pages/shoppingCart/shoppingCart",
+    "pages/my/my",
+    "pages/preview/preview",
+    "pages/setting/setting",
+    "pages/bindPhone/bindPhone",
+    "pages/certification/certification",
+    "pages/login/login",
+    "pages/women/women",
+    "pages/addressList/addressList",
+    "pages/setAddress/setAddress",
+    "pages/orderList/orderList",
+    "pages/fukuan/fukuan",
+    "pages/orderDetail/orderDetail",
+    "pages/expressDetail/expressDetail",
+    "pages/refundSub/refundSub",
+    "pages/refundList/refundList",
+    "pages/myMoney/myMoney",
+    "pages/recharge/recharge",
+    "pages/moneyMingxi/moneyMingxi",
+    "pages/registerPromoter/registerPromoter",
+    "pages/promoterDetail/promoterDetail",
+    "pages/promoterReview/promoterReview",
+    "pages/promoterFail/promoterFail",
+    "pages/myCommission/myCommission",
+    "pages/goWithdraw/goWithdraw",
+    "pages/withdraw/withdraw",
+    "pages/incomeAndExpenses/incomeAndExpenses",
+    "pages/withdrawRecord/withdrawRecord",
+    "pages/myUser/myUser",
+    "pages/printMethod/printMethod",
+    "pages/design/design"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "盒算师",
+    "navigationBarTextStyle": "black"
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx6885acbedba59c14"
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "/images/home.png",
+        "selectedIconPath": "/images/home_selected.png"
+      },
+      {
+        "pagePath": "pages/shoppingCart/shoppingCart",
+        "text": "包装管理",
+        "iconPath": "/images/shoppingCart.png",
+        "selectedIconPath": "/images/shoppingCart_selected.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/images/my.png",
+        "selectedIconPath": "/images/my_selected.png"
+      }
+    ],
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "selectedColor": "#E70010"
+  },
+  "sitemapLocation": "sitemap.json"
+}

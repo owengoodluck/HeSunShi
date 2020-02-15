@@ -1,0 +1,68 @@
+@import '/assets/fonts/iconfont.wxss';
+.shejigao {
+  margin:20rpx;
+  padding-bottom: 20rpx;
+  border: 1rpx solid #E2E0E0;
+  border-radius:10rpx;
+  text-align: center;
+}
+.icon-shangchuan{
+  font-size: 256rpx;
+  color:red;
+}
+.service-line{
+  font-size: 24rpx;
+  font-weight:inherit;
+  color: #060606;
+}
+.service-copy {
+  font-size: 24rpx;
+  font-weight:inherit;
+  color: #060606;
+}
+.libin{
+    display: grid;
+    width: 100%;
+
+    overflow-x: hidden;
+    /* 设置列、行大小 fr单位是等分分配列空间*/
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 500rpx 500rpx;
+    /* 有多余数据时，自动添加新行时默认行高为：200rpx */
+    grid-auto-rows: 500rpx;
+    /* 设置网格线大小 */
+    grid-gap: 10rpx;
+}
+
+.item{
+    background-color: white;
+    text-align: center;
+    border: 1rpx solid #e2e0e0;
+    border-radius: 13rpx;
+}
+.item-image{
+  width: 100%;
+  align-items:center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.item-text{
+  margin: 10rpx;
+  font-size: 24rpx;
+  text-align: left;
+}
+.item-text-use{
+  margin: 10rpx;
+  font-size: 24rpx;
+  text-align: left;
+}
+.recommend-layout{
+  height: 100%;
+  margin: 20rpx;
+}
+.service-recommend-text{
+  font-weight: bold;
+  font-size: 28rpx;
+  margin-left: 20rpx;
+}

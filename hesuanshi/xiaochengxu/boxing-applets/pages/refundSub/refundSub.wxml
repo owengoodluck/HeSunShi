@@ -1,0 +1,72 @@
+<view style='padding-bottom: 130rpx;'>
+  <view style='padding:20rpx;background: #fff;margin-top: 2rpx;'>
+    <view style='display:flex;'>
+      <image src='{{orderDetailVO.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+      <view style='margin-left: 20rpx;'>
+        <view style='font-size:14px;font-weight:bold;color:#333333;' class='one-rows'>{{orderDetailVO.specificationName}}</view>
+        <view style='font-size:12px;color:#999999;margin-top:8rpx;'>盒型：{{orderDetailVO.typeName}}</view>
+        <view style='font-size:12px;color:#999999;margin-top:8rpx;'>材质：{{orderDetailVO.materialName}}</view>
+        <view style='font-size:12px;color:#999999;margin-top:8rpx;'>版面：{{orderDetailVO.layoutName}}</view>
+        <view style='font-size:12px;color:#999999;margin-top:8rpx;'>数量：{{orderDetailVO.quantity}}</view>
+        <view style='font-size:12px;color:#999999;margin-top:8rpx;'>尺寸：{{orderDetailVO.length}}cm*{{orderDetailVO.width}}cm*{{orderDetailVO.height}}cm</view>
+      </view>
+    </view>
+  </view>
+  <!-- 退款原因 -->
+  <view style='background: #fff;margin-top: 20rpx;padding: 0 20rpx;'>
+    <view style='float:left;height:88rpx;font-size:14px;color:rgba(51,51,51,1);line-height:88rpx;'>退款原因:</view>
+    <view style="float:right;display:flex;align-items: center;">
+      <picker mode="selector" bindchange="bindRegionChange" value="{{reason}}" range="{{reasonList}}">
+        <view wx:if='{{reason == ""}}' style='height:88rpx;font-size:14px;color:rgba(153, 153, 153, 1);line-height:88rpx;margin-right:30rpx;'>请选择</view>
+        <view wx:elif='{{reason != ""}}' style='height:88rpx;font-size:14px;color:rgba(51,51,51,1);line-height:88rpx;margin-right:30rpx;'>{{reason}}</view>
+      </picker>
+      <image src='/images/left.png' style='width:10rpx;height:20rpx;'></image>
+    </view>
+    <view style='clear:both;'></view>
+  </view>
+  <!-- 退款金额 -->
+  <view style='background: #fff;margin-top: 20rpx;padding: 0 20rpx;'>
+    <view style='float:left;height:88rpx;font-size:14px;color:rgba(51,51,51,1);line-height:88rpx;'>退款金额:</view>
+    <view style='float:right;height:88rpx;font-size:14px;color:rgba(251, 99, 99, 1);line-height:88rpx;'> ¥{{money}}</view>
+    <view style='clear:both;'></view>
+  </view>
+  <!-- 退款说明 -->
+  <view class='row' style='background: #fff;margin-top: 20rpx;'>
+    <text>退款说明:</text>
+    <input placeholder='选填' value='{{instruction}}' bindinput="instructionChange" placeholder-class='placeholder' style='margin-left: 20rpx;width: 500rpx;'></input>
+  </view>
+  <!-- 上传凭证 -->
+  <view class='row' style='background: #fff;margin-top: 20rpx;'>
+    <text>上传凭证</text>
+  </view>
+  <!-- 上传图片 -->
+  <!-- <view style='background: #fff;'> -->
+    <view class="weui-uploader__bd">
+      <view class="weui-uploader__files" id="uploaderFiles" style='margin-left:20rpx;'>
+        <block wx:for="{{images}}" wx:key="*this">
+          <view class="weui-uploader__file" id="{{item}}">
+            <view class="logoinfo">
+              <image class="logoinfo" bindtap="yulan" data-index="{{index}}" src="{{item}}" mode="aspectFill" />
+              <image class='delete' style='width:36rpx;height:36rpx;' bindtap="del" data-item="{{item}}" data-index="{{index}}" src="/images/qinchu.png" mode="aspectFill" />
+            </view>
+          </view>
+        </block>
+      </view>
+      <view wx:if='{{images.length < 8}}' class="weui-uploader__input-box logoinfo">
+        <view class="weui-uploader__input" bindtap="chooseImage" data-num='{{images.length}}'></view>
+      </view>
+    </view>
+  <!-- </view> -->
+  <view style='padding:20rpx;background: #fff;font-size:12px;font-family:PingFangSC-Regular;font-weight:400;color:rgba(153,153,153,1);line-height:34rpx;'>
+    <text>温馨提示: 照片最多上传8张</text>
+  </view>
+
+  <!-- 提交 -->
+  <view style='position: fixed;bottom:0;width: 100%;height: 100rpx;'>
+    <view style='display:flex;align-items: center;'>
+      <button class='subBtn' bindtap='subRefund'>
+        <text>提交</text>
+      </button>
+    </view>
+  </view>
+</view>

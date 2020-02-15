@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.BoxMaterialDao">
+	<resultMap type="BoxMaterialClassify" id="boxMaterialClassifyMaps">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="boxMaterialDetailList" ofType="BoxMaterialDetail">
+	          <id property="id" column="boxMaterialDetailId"/>
+	          <result property="name" column="boxMaterialDetailName"/>
+	          <result property="image" column="image"/>
+	    </collection>
+	</resultMap>
+	<!-- 查询分类 -->
+	<select id="queryClassify" resultMap="boxMaterialClassifyMaps">
+		select a.id,a.name,b.id as boxMaterialDetailId, b.name as boxMaterialDetailName, b.image from box_material_classify a 
+			left join box_material_detail b on b.box_material_classify_id = a.id
+		<where>
+			a.status = 1
+			and b.status = 1
+			<if test='boxTypeDetailId != null and boxTypeDetailId != "" and boxTypeDetailId != "0" '>
+		        and b.box_type_detail_id = #{boxTypeDetailId}
+		    </if>
+		</where>
+	</select>
+	
+	<!-- 查询分类详情(通过id) -->
+	<select id="queryClassifyDetailById" parameterType="long" resultType="BoxMaterialDetail">
+		select * from box_material_detail
+		<where>
+	    	id = #{id}
+		</where>
+	</select>
+	
+	<!-- 查询分类详情(通过id) -->
+	<select id="queryClassifyDetailByTId" parameterType="long" resultType="BoxMaterialDetail">
+		select * from box_material_detail
+		<where>
+			status = 1
+	    	and box_type_detail_id = #{tId}
+		</where>
+	</select>
+	
+	<!-- 根据盒型id查询材质条数-->
+	<select id="findClassifyDetailNumByTId" resultType="int">
+		SELECT COUNT(id) FROM box_material_detail
+		<where>
+			status = 1
+			and box_type_detail_id = #{tId}
+		</where> 
+	</select>
+	
+</mapper>

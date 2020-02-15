@@ -1,0 +1,13 @@
+<view>
+  <view>
+    <image src='/images/promoter_status2.png' class='title'></image>
+    <view class='text' style='margin-top: 56rpx;'>您好，抱歉您的申请未通过。</view>
+    <view class='text'>请重新申请…</view>
+    <view class='bottom-btn'>
+      <button class='btn' style='width:{{windowWidth}}px;background: #E70010;' bindtap='registerAgainTap'>再次申请</button>
+    </view>
+  </view>
+  <button bindtap='homeTap'>
+    <image src='/images/goHome.png' class='home'></image>
+  </button>
+</view>

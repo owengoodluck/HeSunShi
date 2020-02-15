@@ -1,0 +1,46 @@
+<view style='margin-right:20rpx;margin-left:20rpx;'>
+  <view class='item'>
+    <view class='title' style='float: left;'>企业名称</view>
+    <input class='title' type='text' style='float: right;text-align:right' value='{{companyName}}' bindchange="companyNameChange" placeholder='请输入企业名称'></input>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='item'>
+    <view class='title' style='float: left;'>统一社会信用代码</view>
+    <input class='title' type='text' style='float: right;text-align:right' value='{{creditCode}}' bindchange="creditCodeChange" placeholder='请输入信用代码'></input>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='title' style="float:right;">
+    <image src='/images/left.png' style='width:6px;height:12px;'></image>
+  </view>
+  <view class='item'>
+    <view class='title' style='float: left'>所在地区</view>
+    <view class="section" style='float: right;margin-right: 34rpx;'>
+      <picker mode="region" bindchange="bindRegionChange" value="{{region}}">
+        <view class="title">{{regionSelect}}</view>
+      </picker>
+    </view>
+  </view>
+  <view style='clear:both;'></view>
+  <view class='item'>
+    <view class='title' style='float: left;'>详细地址</view>
+    <input class='title' type='text' style='float: right;text-align:right' value='{{address}}' bindchange="addressChange" placeholder='请输入详细地址'></input>
+  </view>
+  <view style='clear:both;'></view>
+
+  <!-- 上传营业执照 -->
+  <view class='row' style='background: #fff;margin-top: 20rpx;'>上传营业执照</view>
+  <view class="weui-uploader__bd" style='padding-left:20rpx;'>
+    <view wx:if='{{!addHidden}}' class="weui-uploader__input-box logoinfo">
+      <image class="logoinfo" bindtap="preview" src="{{businessLicense}}" mode="aspectFill" />
+      <image class='delete' bindtap="del" src="/images/qinchu.png" mode="aspectFill" />
+    </view>
+    <view wx:if='{{addHidden}}' class="weui-uploader__input-box logoinfo">
+      <view class="weui-uploader__input" bindtap="chooseImage"></view>
+    </view>
+  </view>
+
+
+  <view wx:if='{{status != 0 && status != 1}}' style='margin-top: 64rpx;'>
+    <button class='subButton' bindtap="submit">保存</button>
+  </view>
+</view>

@@ -1,0 +1,107 @@
+<view style='border-bottom:2px solid rgba(151,151,151,0.1);'></view>
+
+<!-- 头部 -->
+<view wx:if="{{orderDetail.status == 0}}" class='notice'>待付款</view>
+<view wx:elif="{{orderDetail.status == 1}}" class='notice'>待发货</view>
+<view wx:elif="{{orderDetail.status == 2}}" class='notice'>待收货</view>
+<view wx:elif="{{orderDetail.status == 3}}" class='notice'>交易成功</view>
+<view wx:elif="{{orderDetail.status == 4}}" class='notice'>交易取消</view>
+<view wx:elif="{{orderDetail.status == 5}}" class='notice'>交易删除</view>
+<view wx:elif="{{orderDetail.status == 6}}" class='notice'>退款中</view>
+<!-- 商品详情 -->
+<view class='border'>
+  <!--商品集合  -->
+  <view wx:for='{{orderDetail.orderDetailVO}}' wx:key="{{index}}" data-index='{{index}}' style='border-bottom:1px solid rgba(151,151,151,0.1); margin: 10rpx 0;padding-bottom: 20rpx;'>
+    <view style='float:left;display:flex;'>
+      <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+      <view style='margin-left: 20rpx;width: 350rpx;'>
+        <view style='font-size:15px;color:#000;' class='one-rows'> {{item.specificationName}}</view>
+        <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+        <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+        <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+        <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+        <view style='clear:both;'></view>
+      </view>
+    </view>
+    <view style="float:right;display:flex;align-items: center;">
+      <view>
+        <view wx:if='{{(orderDetail.status == 1) && (item.status == 0)}}' class='tuikuan' bindtap="tuikuanTap" data-index='{{index}}'>退款</view>
+        <view wx:if='{{item.status == 2}}' style='font-size:12px;color:#999999;text-align:right;margin-top: 6rpx;'>退款中</view>
+        <view wx:if='{{item.status == 3}}' style='font-size:12px;color:#999999;text-align:right;margin-top: 6rpx;'>已退款</view>
+      </view>
+    </view>
+    <view style='clear:both;'></view>
+    <view style='font-size:14px;height: 30rpx;display: flex;justify-content: space-around;margin-top: 10rpx;'>
+      <view style='color: #E70010;'>¥{{item.price}}</view>
+      <view style='color: #888;'>运费: {{item.fare}}</view>
+      <view style='color: #888;'>x {{item.quantity}}</view>
+    </view>
+  </view>
+  <view wx:if='{{orderDetail.fareType == 0}}' style='font-size:14px;height: 40rpx;color: #FF8500;'>该订单运费由寄方支付
+  </view>
+  <view wx:if='{{orderDetail.fareType == 1}}' style='font-size:14px;height: 40rpx;color: #FF8500;'>该订单运费由买方支付
+  </view>
+  <!-- 商品金额 -->
+  <view style='float:left;display:flex;align-items: center;margin-top: 24rpx;'>
+    <view>
+      <view style='font-size:14px;color:#666666;margin-top:4rpx;'>方案金额</view>
+      <view style='font-size:14px;color:#666666;margin-top:32rpx;'>运费合计</view>
+    </view>
+  </view>
+  <view style="float:right;display:flex;align-items: center;margin-top: 24rpx;">
+    <view>
+      <view style='font-size:14px;color:#666666;text-align:right'> ¥{{count}}</view>
+      <view style='font-size:14px;color:#666666;text-align:right;margin-top:32rpx;'> ¥{{yunfei}}</view>
+      <view style='margin-top:32rpx;'>
+        <text style='font-size:12px;color:#333333;text-align:right;'>合计:</text>
+        <text style='font-size:16px;color:#FB6363;text-align:right;margin-left: 20rpx;'>¥{{orderDetail.countPrice}}</text>
+      </view>
+    </view>
+  </view>
+  <view style='clear:both;'></view>
+</view>
+
+<!-- 配送地址 -->
+<view class='border' style='margin-top: 20rpx;'>
+  <view style='display:flex;border-bottom:1px solid rgba(151,151,151,0.1);padding-bottom: 20rpx;'>
+    <view style='width: 170rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>配送地址:</view>
+    </view>
+    <view style='width: 580rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#666666;'>{{orderDetail.contactName}} {{orderDetail.contactPhone}}</view>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#666666;'>{{orderDetail.contactAddress}}</view>
+    </view>
+  </view>
+  <view style='display:flex;margin-top: 8rpx;'>
+    <view style='width: 170rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>订单编号:</view>
+    </view>
+    <view style='width: 580rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>{{orderDetail.orderNumber}}</view>
+    </view>
+  </view>
+  <view style='display:flex;margin-top: 8rpx;'>
+    <view style='width: 170rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>下单时间:</view>
+    </view>
+    <view style='width: 580rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>{{orderDetail.createTime}}</view>
+    </view>
+  </view>
+  <view style='display:flex;margin-top: 8rpx;'>
+    <view style='width: 170rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>支付方式:</view>
+    </view>
+    <view style='width: 580rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>微信支付</view>
+    </view>
+  </view>
+  <view style='display:flex;margin-top: 8rpx;'>
+    <view style='width: 170rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>买家留言:</view>
+    </view>
+    <view style='width: 580rpx;'>
+      <view style='font-size:14px;font-family:PingFangSC-Regular;font-weight:400;color:#333333;'>{{orderDetail.remark}}</view>
+    </view>
+  </view>
+</view>

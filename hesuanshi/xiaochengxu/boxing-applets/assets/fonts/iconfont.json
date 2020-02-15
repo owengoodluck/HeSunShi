@@ -1,0 +1,205 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11935574",
+      "name": "彩色",
+      "font_class": "caise",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "11935575",
+      "name": "材质",
+      "font_class": "caizhi",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "11935576",
+      "name": "单色",
+      "font_class": "danse",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "11935577",
+      "name": "待确认",
+      "font_class": "daiqueren",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "11935578",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "11935579",
+      "name": "盒型",
+      "font_class": "hexing",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "11935580",
+      "name": "名称",
+      "font_class": "mingcheng",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "11935581",
+      "name": "数量",
+      "font_class": "shuliang",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "11935582",
+      "name": "工艺",
+      "font_class": "gongyi",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "11935583",
+      "name": "尺寸",
+      "font_class": "chicun",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "11935584",
+      "name": "空白",
+      "font_class": "kongbai",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "11935585",
+      "name": "增加",
+      "font_class": "zengjia",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "11935586",
+      "name": "外包装",
+      "font_class": "waibaozhuang",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "11935587",
+      "name": "设计稿",
+      "font_class": "shejigao",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "11935588",
+      "name": "备注",
+      "font_class": "beizhu",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "11935589",
+      "name": "印刷",
+      "font_class": "yinshua",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "11935591",
+      "name": "hezi",
+      "font_class": "hezi",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "11935592",
+      "name": "溯源码",
+      "font_class": "suyuanma",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "11935593",
+      "name": "上传",
+      "font_class": "shangchuan",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "11935669",
+      "name": "配件",
+      "font_class": "peijian",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "12129060",
+      "name": "头像",
+      "font_class": "touxiang",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "12129061",
+      "name": "上传成功",
+      "font_class": "shangchuanchenggong",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "12129062",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "12129063",
+      "name": "上传",
+      "font_class": "shangchuan1",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "12129064",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "12129065",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "12129066",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "12129067",
+      "name": "完成",
+      "font_class": "wancheng",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    }
+  ]
+}

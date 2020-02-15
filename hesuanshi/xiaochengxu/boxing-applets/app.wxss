@@ -1,0 +1,52 @@
+/**app.wxss**/
+page {
+  background-color: #f8f8f8;
+}
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.noData {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 234rpx;
+}
+
+.noData-icon {
+  width: 252rpx;
+  height: 260rpx;
+}
+
+.noData-text {
+  margin-top: 40rpx;
+  font-size: 15px;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.one-rows {
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-wrap;
+}

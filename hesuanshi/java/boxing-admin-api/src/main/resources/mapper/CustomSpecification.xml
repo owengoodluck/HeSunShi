@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.CustomSpecificationDao">
+	
+	<!-- 分页方案 -->
+	<select id="queryByPage" resultType="CustomSpecification">
+		select a.id,
+			   a.user_id as uId,
+			   a.type,
+			   a.name,
+			   a.custom_number as customNumber,
+			   a.type_id as typeId,
+			   a.type_name as typeName,
+			   a.type_image as typeImage,
+			   a.material_id as materialId,
+			   a.material_name as materialName,
+			   a.material_image as materialImage,
+			   a.layout_id as layoutId,
+			   a.layout_name as layoutName,
+			   a.layout_image as layoutImage,
+			   a.print_method_id as printMethodId,
+			   a.print_method_name as printMethodName,
+			   a.length,
+			   a.width,
+			   a.height,
+			   a.piece,
+			   a.price,
+			   a.fare,
+			   a.form_id as formId,
+			   a.is_upload as isUpload,
+			   date_format(a.update_time,'%Y-%m-%d %H:%i') as updateTime,
+			   b.nick_name as nickName,
+			   b.phone
+		from custom_specification a LEFT JOIN user b ON a.user_id = b.id
+		<where>
+			<if test="type != null and type != ''">
+				a.type = #{type}
+			</if>
+		</where>
+		ORDER BY a.update_time DESC
+	</select>
+	
+	<select id="queryByCustomNumber" resultType="CustomSpecification">
+		select a.id,
+			   a.user_id as uId,
+			   a.type,
+			   a.name,
+			   a.custom_number as customNumber,
+			   a.type_id as typeId,
+			   a.type_name as typeName,
+			   a.type_image as typeImage,
+			   a.material_id as materialId,
+			   a.material_name as materialName,
+			   a.material_image as materialImage,
+			   a.layout_id as layoutId,
+			   a.layout_name as layoutName,
+			   a.layout_image as layoutImage,
+			   a.print_method_id as printMethodId,
+			   a.print_method_name as printMethodName,
+			   a.length,
+			   a.width,
+			   a.height,
+			   a.piece,
+			   a.price,
+			   a.fare,
+			   a.form_id as formId,
+			   a.is_upload as isUpload,
+			   date_format(a.update_time,'%Y-%m-%d %H:%i') as updateTime,
+			   b.nick_name as nickName,
+			   b.phone
+		
+		from custom_specification a LEFT JOIN user b ON a.user_id = b.id
+		<where>	
+			a.custom_number = #{customNumber}		
+		</where>
+	</select>
+
+	<!-- 报价-->
+	<update id="quotedPrice" parameterType="CustomSpecification">
+		UPDATE custom_specification
+		<set>
+			type = 1,
+			price = #{price},
+			fare = #{fare}
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!-- 上传设计稿-->
+	<update id="isUpload" parameterType="CustomSpecification">
+		UPDATE custom_specification
+		<set>
+			is_upload = 1,
+			update_time = now()
+		</set>
+		<where>
+			custom_number = #{custom_number}
+		</where>
+	</update>
+	
+</mapper>

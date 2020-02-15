@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.BoxMaterialDao">
+	
+	<!-- 添加材质-->
+	<insert id="insert" parameterType="BoxMaterial">
+        INSERT INTO box_material_detail (
+        			box_material_classify_id,
+        			box_type_detail_id,
+        			name,
+        			image,
+        			price,
+        			grams,
+        			remark,
+        			create_time,
+        			update_time
+        	) VALUES(
+        			#{classifyId},
+        			#{boxTypeId},
+        			#{name},
+        			#{image},
+        			#{price},
+        			#{grams},
+        			#{remark},
+        			now(),
+        			now()
+        		)
+    </insert>
+    
+    <!-- 分页查询材质-->
+	<select id="queryByPage" resultType="BoxMaterial">
+		SELECT a.id,
+			   a.name,
+			   a.image,
+			   a.price,
+			   a.grams,
+			   a.remark,
+			   a.status,
+			   b.id as classifyId,
+			   b.name as classifyName,
+			   c.name as boxTypeName,
+			   c.id as boxTypeId
+		FROM box_material_detail a LEFT JOIN box_material_classify b ON a.box_material_classify_id = b.id
+								   LEFT JOIN box_type_detail c ON c.id = a.box_type_detail_id
+		<where>
+			<if test="name != null and name != ''">
+				a.name LIKE CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新材质-->
+ 	<update id="update" parameterType="BoxMaterial">
+		UPDATE box_material_detail
+		<set>
+			<if test="classifyId != null and classifyId !=''">
+				box_material_classify_id = #{classifyId},
+			</if>
+			<if test="boxTypeId != null and boxTypeId !=''">
+				box_type_detail_id = #{boxTypeId},
+			</if>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="image != null and image !=''">
+				image = #{image},
+			</if>
+			<if test="price != null and price !=''">
+				price = #{price},
+			</if>
+			<if test="grams != null and grams !=''">
+				grams = #{grams},
+			</if>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+			<if test="status != null and status !=''">
+				status = #{status},
+			</if>
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<!--删除材质 -->
+	<delete id="delete" parameterType="int">
+        DELETE FROM box_material_detail
+        <where>
+			id = #{id}
+		</where>
+    </delete>
+    
+    <!-- 根据盒型id查询材质条数-->
+	<select id="findNumByBoxtypeId" resultType="int">
+		SELECT COUNT(id) FROM box_material_detail
+		<where>
+			box_type_detail_id = #{typeId} 
+		</where> 
+	</select>
+</mapper>

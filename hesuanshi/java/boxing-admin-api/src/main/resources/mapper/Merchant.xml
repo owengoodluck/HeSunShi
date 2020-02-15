@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.MerchantDao">
+	<!-- 分页查询商户 -->
+	<select id="queryByPage" resultType="Merchant">
+		SELECT id,
+			   phone,
+			   contact,
+			   logo,
+			   name,
+			   items,
+			   license,
+			   province,
+			   city,
+			   county,
+			   address,
+			   status,
+			   remark,
+			   date_format(create_time,'%Y-%m-%d %H:%i') as createTime
+		FROM merchant
+		<where>
+			1=1
+			<if test="name != null and name != ''">
+				AND	contact LIKE CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询所有通过审核的商户 -->
+	<select id="getMerchant" resultType="Merchant">
+		SELECT *FROM merchant
+		<where>
+			status = 1
+		</where>
+	</select>
+	
+	<!-- 修改商户的状态 -->
+	<update id="updateStatus">
+		UPDATE merchant
+		<set>
+			<if test="remark != null and remark !=''">
+				remark = #{remark},
+			</if>
+			status = #{status},
+			update_time = now()
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+</mapper>

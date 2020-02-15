@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.PrintMethodDao">
+	
+	<!--查询印刷方式用于回显下拉框 -->
+	<select id="findPrintMethod" resultType="PrintMethod">
+		SELECT id, name FROM print_method WHERE status = 1
+	</select>
+	
+	<!-- 添加印刷方式-->
+	<insert id="insert" parameterType="PrintMethod">
+        INSERT INTO print_method (name,create_time,update_time) VALUES(#{name},now(),now())
+    </insert>
+    
+    <!-- 分页查询印刷方式 -->
+	<select id="queryByPage" resultType="PrintMethod">
+		SELECT id, name,status FROM print_method
+		<where>
+			<if test="name != null and name != ''">
+				name LIKE CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 更新印刷方式 -->
+	<update id="update" parameterType="PrintMethod">
+		UPDATE print_method
+		<set>
+			<if test="name != null and name !=''">
+				name = #{name},
+			</if>
+			<if test="status != null and status !=''">
+				status = #{status},
+			</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+</mapper>

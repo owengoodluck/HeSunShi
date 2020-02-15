@@ -1,0 +1,9 @@
+<view>
+  <view style='height:{{windowHeight-45}}px;background:#333333;display: flex;flex-direction: column;align-items: center;justify-content: space-around;'>
+    <image src='{{shareData[currentIndex]}}' style='height:{{windowHeight-100}}px;' bindlongpress='previewImage' mode='aspectFit'></image>
+    <text style='color:#fff;'>长按保存图片，邀请好友</text>
+  </view>
+  <scroll-view scroll-x style='width:100%;height:108px;white-space: nowrap;display: flex;'>
+    <image src='{{item}}' style='width:72px;height:72px;border-radius:5px;margin:36rpx 20rpx;' wx:for="{{shareData}}" wx:key="{{index}}" data-index="{{index}}" bindtap='showInviteBg'></image>
+  </scroll-view>
+</view>

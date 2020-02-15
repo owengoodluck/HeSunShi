@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.OrderPayDao">
+
+	<!-- 添加支付记录-->
+	<insert id="insert" parameterType="OrderPay" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_pay (
+			user_id,
+			pay_type,
+			subject,
+			body,
+			amount,
+			out_trade_no,
+			internal_trade_no,
+			notify_url,
+			openid,
+			payment_type,
+			payment_status,
+			create_time,
+			update_time
+        )
+        VALUES(
+        	#{userId},
+			#{payType},
+			#{subject},
+			#{body},
+			#{totalAmount},
+			#{outTradeNo},
+			#{internalTradeNo},
+			#{notifyUrl},
+			#{openid},
+			#{paymentType},
+			#{paymentStatus},
+	        now(),
+	        now()
+		)
+    </insert>
+
+	<!-- 修改支付记录状态-->
+    <update id="updatePaymentStatusByOutTradeNo">
+		UPDATE order_pay
+		<set>
+			payment_status = #{paymentStatus},
+			update_time= now()
+		</set>
+		<where>
+			out_trade_no = #{outTradeNo}
+		</where>
+	</update>
+
+ 	<select id="findByOutTradeNo" resultType="OrderPay">
+		SELECT id,
+			user_id as userId,
+			pay_type as payType,
+			subject as payType,
+			body as body,
+			amount as totalAmount,
+			out_trade_no as outTradeNo,
+			internal_trade_no as internalTradeNo,
+			notify_url as notifyUrl,
+			openid as openid,
+			payment_type as paymentType,
+			payment_status as paymentStatus
+		FROM order_pay
+		<where>
+			out_trade_no = #{outTradeNo}
+		</where>
+	</select>
+
+</mapper>

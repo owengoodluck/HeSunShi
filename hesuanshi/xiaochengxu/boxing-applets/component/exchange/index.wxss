@@ -1,0 +1,64 @@
+.dialog-gray {
+  background: rgba(0,0,0,0.5);
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contain {
+  width: 614rpx;
+  height: 350rpx;
+  background:rgba(255,255,255,1);
+  border-radius:13px;
+  position: relative;
+}
+
+.main {
+  text-align: center;
+}
+
+.title {
+  margin-top: 34rpx;
+  font-size:15px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:21px;
+}
+
+.input {
+  height: 74rpx;
+  line-height: 74rpx;
+  border-radius: 8rpx;
+  margin: 45rpx 54rpx 20rpx 54rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 0px 4px 0px rgba(0,0,0,0.09);
+}
+
+.input-placeholder {
+  height: 74rpx;
+  line-height: 74rpx;
+  font-size:14px;
+  font-family:PingFangSC-Regular;
+  font-weight:400;
+  color:rgba(136,136,136,1);
+}
+
+.btn {
+  margin-top: 78rpx;
+  height: 74rpx;
+  border-radius: 0rpx;
+  line-height: 74rpx;
+  text-align: center;
+  box-shadow:0px 0px 4px 0px rgba(0,0,0,0.09);
+}
+
+button::after {
+  border: 0 none;
+}

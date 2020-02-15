@@ -1,0 +1,24 @@
+<view class="dialog-gray" wx:if='{{showTolast}}'>
+    <view class="contain" >
+        <view class="title">添加需求<span class="iconfont icon-guanbi" bindtap="toggleToast"></span></view>
+        <view class="main">
+          <view class="section">
+            <view class="flex-wrp" style="flex-direction:row;display:flex;">
+              <view class="flex-item item-custom">              
+                <view class="item-icon"><span class="iconfont icon-shejigao" bindtap="toShejigao"></span></view>
+                <view class="item-text">设计稿</view>  
+              </view>
+              <!-- 
+              <view class="flex-item item-custom">
+                <view class="item-icon "><span class="iconfont icon-shejigao"></span></view>
+                <view class="item-text">设计稿</view>
+              </view>
+              -->
+            </view>
+          </view>
+        <!--
+          <view bind:tap="sendProject" class="btn">确定</view>
+         -->
+        </view>
+    </view>
+</view>

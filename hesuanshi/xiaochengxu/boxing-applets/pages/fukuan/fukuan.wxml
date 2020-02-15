@@ -1,0 +1,111 @@
+<form bindsubmit='subOrderTap' report-submit>
+  <view>
+    <!-- 收货地址 -->
+    <view class='border' bindtap='updateAddress'>
+      <view style='float:left;display:flex;align-items: center;width: 650rpx;margin: 20rpx 0;'>
+        <view wx:if='{{contactName == ""}}'>
+          <view style='font-size:18px;font-weight:bold;color:rgba(51,51,51,1);line-height:25px;'>
+            <text decode="{{true}}" space="{{true}}">暂无收货地址</text>
+          </view>
+          <view style='margin-top:24rpx;font-size:13px;color:rgba(102,102,102,1);line-height:17px;'>
+            <text decode="{{true}}" space="{{true}}">请选择或新建收货地址</text>
+          </view>
+        </view>
+        <view wx:elif='{{contactName != ""}}'>
+          <view style='font-size:18px;color:rgba(51,51,51,1);line-height:25px;'>
+            <text decode="{{true}}" space="{{true}}">{{contactName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{contactPhone}}</text>
+          </view>
+          <view style='margin-top:24rpx;font-size:13px;color:rgba(102,102,102,1);line-height:17px;'>
+            <text decode="{{true}}" space="{{true}}">{{contactAddress}}</text>
+          </view>
+        </view>
+      </view>
+      <view style="float:right;margin-top: 30rpx;width:10rpx;">
+        <image src='/images/left.png' style='width:10rpx;height: 22rpx;'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <!-- 商品详情 -->
+    <view class='border' style='margin-top: 20rpx;'>
+      <!--商品集合  -->
+      <view wx:for='{{customList}}' wx:key="{{index}}" data-index='{{index}}' style='border-bottom:1px solid rgba(151,151,151,0.1);padding-top: 20rpx;'>
+        <view style='display:flex;'>
+          <image src='{{item.layoutImage}}' style='width: 188rpx;height: 188rpx;border-radius: 8rpx;'></image>
+          <view style='margin-left: 20rpx;width: 400rpx;'>
+            <view style='font-size:15px;color:#000;' class='one-rows'> {{item.name}}</view>
+            <view style='font-size:12px;color:#888;margin-top:10rpx;'> 盒形：{{item.typeName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 材质：{{item.materialName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 版面：{{item.layoutName}}</view>
+            <view style='font-size:12px;color:#888;margin-top:2rpx;'> 尺寸：{{item.length}}cm*{{item.width}}cm*{{item.height}}cm</view>
+          </view>
+        </view>
+        <view style='font-size:14px;height: 88rpx;display: flex;justify-content: space-around;align-items: center;'>
+          <view style='color: #E70010;'>¥{{item.price}}</view>
+          <view style='color: #888;'>运费: {{item.fare}}</view>
+          <view style='color: #888;'>x {{item.piece}}</view>
+        </view>
+      </view>
+      <!-- 商品金额 -->
+      <view style='float:left;display:flex;align-items: center;margin-top: 20rpx;'>
+        <view>
+          <view style='font-size:14px;color:#666666;'>方案金额</view>
+          <view style='font-size:14px;color:#666666;margin-top:16rpx;'>运费合计</view>
+        </view>
+      </view>
+      <view style="float:right;display:flex;align-items: center;margin-top: 24rpx;">
+        <view>
+          <view style='font-size:14px;color:#666666;text-align:right;'> ¥{{count}}</view>
+          <view style='font-size:14px;color:#666666;text-align:right;margin-top:16rpx;'> ¥{{yunfei}}</view>
+          <view style='margin:16rpx 0;'>
+            <text style='font-size:12px;color:#333333;text-align:right;'>合计:</text>
+            <text style='font-size:16px;color:#FB6363;text-align:right;margin-left: 20rpx;'>¥{{heji}}</text>
+          </view>
+        </view>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+
+    <view class='border' style='margin-top: 20rpx;'>
+      <!-- 运费结算方式  -->
+      <view style='border-bottom:1px solid rgba(151,151,151,0.1);height:100rpx;line-height: 100rpx;'>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{fareTypes}}">
+          <view style='float:left;display:flex;align-items: center;'>
+            <view style='font-size:14px;font-weight:bold;color:#333333;'>运费结算方式</view>
+          </view>
+          <view style="float:right;display:flex;align-items: center;">
+            <view style='font-size:14px;color:#888888;text-align:right'> {{fareTypes[fareType]}}</view>
+            <image src='/images/left.png' style='width:10rpx;height: 22rpx;margin-left:26rpx;'></image>
+          </view>
+          <view style='clear:both;'></view>
+        </picker>
+      </view>
+      <!-- 支付方式  -->
+      <view style='border-bottom:1px solid rgba(151,151,151,0.1);height:100rpx;line-height: 100rpx;'>
+        <view style='float:left;display:flex;align-items: center;'>
+          <view style='font-size:14px;font-weight:bold;color:#333333;'>支付方式</view>
+        </view>
+        <view style="float:right;display:flex;align-items: center;">
+          <view style='font-size:14px;color:#888888;text-align:right'> 微信支付</view>
+          <image src='/images/left.png' style='width:10rpx;height: 22rpx;margin-left:26rpx;'></image>
+        </view>
+        <view style='clear:both;'></view>
+      </view>
+      <!-- 买家留言 -->
+      <view style='display:flex;align-items: center;height:100rpx;'>
+        <view style='font-size:14px;font-weight:bold;color:#333333;'>买家留言:</view>
+        <input style='font-size:14px;color:#333333;margin-left: 20rpx;width: 480rpx;' placeholder='选填:填写内容已和卖家协商确认' placeholder-class='placeholder' value='{{orderDatil.remark}}' bindinput="remarkChange"></input>
+      </view>
+    </view>
+  </view>
+  <view style='position: fixed;bottom:0;width: 100%;height: 100rpx;border:1px solid rgba(151,151,151,0.1);background: #fff;z-index: 10;'>
+    <view style='float:left;display:flex;align-items: center; background: #fff'>
+      <view style='font-size: 16px;display: flex;align-items: center;justify-content: center;height: 100rpx;margin-left: 20rpx;'>
+        <text style='font-size:14px;color:#333333;text-align:right;'>订单总额:</text>
+        <text style='font-size:20px;color:#FB6363;text-align:right;margin-left: 20rpx;'>¥{{heji}}</text>
+      </view>
+    </view>
+    <view style='float:right;display:flex;align-items: center;background: #fff'>
+      <button class='subBtn' form-type='submit'>预付款{{advancePaymentPriceTotal}}</button>
+    </view>
+  </view>
+</form>

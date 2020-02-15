@@ -1,0 +1,49 @@
+<view>
+  <view class="shejigao">
+    <view class="item-icon">
+      <span class="iconfont icon-shangchuan"></span>
+    </view>
+    <view class="service-text">未上传效果图</view>
+    <view class="service-line">
+        <view style='float:left;display:flex;align-items: center;height:88rpx;'>
+          <view style='font-size:12px;color:#888;width: 500rpx;' class='one-rows'>文件上传链接：https://admin.cwzjapp.com/#/upload/1/{{customNumber}}</view>
+        </view>
+        <view style="float:right;display:flex;align-items: center;height:88rpx;" bindtap='copyText' data-text="https://admin.cwzjapp.com/#/upload/1/{{customNumber}}">
+          <image src='/images/fuzhi.png' style='width: 24rpx; height: 24rpx;'></image>
+          <view style='font-size:12px;color:#888;margin-left: 6rpx;'> 复制</view>
+        </view>
+        <view style='clear:both;'></view>
+    </view>
+    <view class="service-copy">复制云盘地址，请到电脑PC上传文件</view>
+  </view>
+  <view class="service-recommend-text">推荐模板参考</view>
+  <view class="recommend-layout">
+    <view class="libin">
+      <view class="item" wx:for="{{classifyList}}" wx:key="{{index}}" data-id="{{item.id}}" bindtap="gotoDetail">
+        <view class="section">
+          <view class="flex-wrp" style="flex-direction:column;display:flex;">
+            <view class="flex-item item-image">
+              <image src="{{item.image}}" mode="widthFix" style="width:100%"></image>
+            </view>
+            <view class="flex-item item-text">{{item.name}}</view>
+            <!--<view class="flex-item item-text-use">已1234人使用过</view>-->
+          </view>
+        </view>
+      </view>
+      <!--       
+      <view class="item">
+        <view class="section">
+          <view class="flex-wrp" style="flex-direction:column;display:flex;">
+            <view class="flex-item item-image">
+              <image src="/images/hexing.png" mode="widthFix" style="width:100%"></image>
+            </view>
+            <view class="flex-item item-text">特产/干货</view>
+            <view class="flex-item item-text-use">已1234人使用过</view>
+          </view>
+        </view>
+      </view>
+      -->
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.CommissionRecordDao">
+
+	<!-- 佣金记录列表 -->
+	<select id="findCommissionRecordByUserId" resultType="CommissionRecord">
+    	SELECT a.commission,
+    		   a.status,
+    		   date_format(a.create_time,'%Y-%m-%d %H:%i') as time,
+    		   a.price,
+    		   a.user_id as userId,
+    		   d.nick_name as userName,
+    		   d.avatar,
+    		   b.specification_name as specificationName
+    	FROM commission_record a LEFT JOIN order_detail b ON a.order_detail_id = b.id
+    							 LEFT JOIN order_user c ON b.order_id = c.id
+    							 LEFT JOIN user d ON d.id = c.user_id
+    	<where>
+    		a.user_id = #{uId}
+    	</where>
+    	ORDER BY a.create_time DESC
+    </select>
+    
+    <!-- 修改佣金记录状态-->
+    <update id="updateStatus">
+		UPDATE commission_record
+		<set>
+			 status = #{status},
+			 update_time= now()
+		</set>
+		<where>
+			withdraw_record_id = #{withdrawRecordId}
+		</where>
+	</update>
+</mapper>

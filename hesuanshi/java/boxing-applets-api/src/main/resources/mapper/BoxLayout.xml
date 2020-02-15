@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xseagull.boxing.features.dao.BoxLayoutDao">
+	<resultMap type="BoxLayoutClassify" id="boxLayoutClassifyMaps">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<collection property="boxLayoutDetailList" ofType="BoxLayoutDetail">
+	          <id property="id" column="boxLayoutDetailId"/>
+	          <result property="name" column="boxLayoutDetailName"/>
+	          <result property="image" column="image"/>
+	    </collection>
+	</resultMap>
+	<!-- 查询分类 -->
+	<select id="queryClassify" resultMap="boxLayoutClassifyMaps">
+		select a.id,a.name,b.id as boxLayoutDetailId, b.name as boxLayoutDetailName, b.image from box_layout_classify a 
+			left join box_layout_detail b on b.box_layout_classify_id = a.id
+		<where>
+			a.status = 1
+			and b.status = 1
+			<if test='boxTypeDetailId != null and boxTypeDetailId != "" and boxTypeDetailId != "0" '>
+		        and b.box_type_detail_id = #{boxTypeDetailId}
+		    </if>
+		</where>
+	</select>
+	<!-- 查询分类详情(通过id) -->
+	<select id="queryClassifyDetailById" parameterType="long" resultType="BoxLayoutDetail">
+		select * from box_layout_detail
+		<where>
+	    	id = #{id}
+		</where>
+	</select>
+	
+	<!-- 查询分类详情(通过id) -->
+	<select id="queryClassifyDetailByTId" parameterType="long" resultType="BoxLayoutDetail">
+		select * from box_layout_detail
+		<where>
+	    	box_type_detail_id = #{tId}
+		</where>
+	</select>
+	
+	
+	
+</mapper>

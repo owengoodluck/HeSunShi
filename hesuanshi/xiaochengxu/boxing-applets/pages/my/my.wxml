@@ -1,0 +1,128 @@
+<view>
+  <!-- 头像,昵称 -->
+  <view wx:if="{{!login}}" class='user'>
+    <button open-type="getUserInfo" class='user_info' lang="zh_CN" bindgetuserinfo="onGotUserInfo">
+      <image src='{{avatar}}' class='user_img'></image>
+      <view class="nick_name">{{nickName}}</view>
+    </button>
+  </view>
+  <view wx:elif="{{login}}" class='user'>
+    <button class='user_info' bindtap='setting'>
+      <image src='{{avatar}}' class='user_img'></image>
+      <view class="nick_name">{{nickName}}</view>
+    </button>
+  </view>
+  <view class='order'>
+    <view class='order_title' bindtap='orderTap' data-index='-1'>
+      <view class='title_left'>我的订单</view>
+      <view class='title_right'>查看全部订单</view>
+      <view style='clear:both;'></view>
+    </view>
+    <view class='order_icon'>
+      <view class='icon_block' style='flex-direction: column;' bindtap='orderTap' data-index='-1'>
+        <image src='/images/order_all.png' class='icon'></image>
+        <text>全部</text>
+      </view>
+      <view class='icon_block' bindtap='orderTap' data-index='0'>
+        <view style='display: flex;align-items: center;flex-direction: column;'>
+          <image src='/images/order_1.png' class='icon'></image>
+          <text>待付款</text>
+        </view>
+        <view wx:if='{{orderNum.pendingPay > 0}}' class='num'>{{orderNum.pendingPay}}</view>
+      </view>
+      <view class='icon_block' bindtap='orderTap' data-index='1'>
+        <view style='display: flex;align-items: center;flex-direction: column;'>
+          <image src='/images/order_2.png' class='icon'></image>
+          <text>待发货</text>
+        </view>
+        <view wx:if='{{orderNum.pendingDelivery > 0}}' class='num'>{{orderNum.pendingDelivery}}</view>
+      </view>
+      <view class='icon_block' bindtap='orderTap' data-index='2'>
+        <view style='display: flex;align-items: center;flex-direction: column;'>
+          <image src='/images/order_3.png' class='icon'></image>
+          <text>待收货</text>
+        </view>
+        <view wx:if='{{orderNum.pendingReceipt > 0}}' class='num'>{{orderNum.pendingReceipt}}</view>
+      </view>
+      <view class='icon_block' bindtap='tuikuanTap'>
+        <view style='display: flex;align-items: center;flex-direction: column;'>
+          <image src='/images/order_4.png' class='icon'></image>
+          <text>退款</text>
+        </view>
+        <view wx:if='{{orderNum.refund > 0}}' class='num'>{{orderNum.refund}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='user_service'>
+    <view class='service_detail' bindtap='myMoneyTap'>
+      <view class='service_detail_left'>
+        <image src='/images/money.png' class='service_left_icon'></image>
+        <text class='service_text'>我的钱包</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <!-- <view class='service_detail' bindtap='commissionTap'>
+      <view class='service_detail_left'>
+        <image src='/images/money.png' class='service_left_icon'></image>
+        <text class='service_text'>我的金额</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view> -->
+    <view class='service_detail' bindtap='promotionTap'>
+      <view class='service_detail_left'>
+        <image src='/images/promoter.png' class='service_left_icon'></image>
+        <text class='service_text'>推广会员</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <view class='service_detail' bindtap='addressTap'>
+      <view class='service_detail_left'>
+        <image src='/images/address.png' class='service_left_icon'></image>
+        <text class='service_text'>收货地址</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <button class='service_detail_button' open-type="contact">
+      <view class='service_detail_left'>
+        <image src='/images/my_contact.png' class='service_left_icon'></image>
+        <text class='service_text'>联系客服</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </button>
+    <view class='service_detail' bindtap='setting'>
+      <view class='service_detail_left'>
+        <image src='/images/setting.png' class='service_left_icon'></image>
+        <text class='service_text'>我的资料</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view>
+    <!-- <view class='service_detail' style='border-bottom: 1px solid #fff;' bindtap='womenTap'>
+      <view class='service_detail_left'>
+        <image src='/images/aboutWo.png' class='service_left_icon'></image>
+        <text class='service_text'>关于我们</text>
+      </view>
+      <view class='service_detail_right'>
+        <image src='/images/left.png' class='service_right_icon'></image>
+      </view>
+      <view style='clear:both;'></view>
+    </view> -->
+  </view>
+</view>
