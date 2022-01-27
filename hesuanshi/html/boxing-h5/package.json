@@ -18,7 +18,7 @@
     "lib-flexible": "^0.3.2",
     "photo-sphere-viewer": "^3.5.1",
     "px2rem-loader": "^0.1.9",
-    "three": "^0.105.2",
+    "three": "^0.137.0",
     "three-css3drenderer": "^1.0.1",
     "three-trackballcontrols": "0.0.8",
     "vue": "^2.3.2",
